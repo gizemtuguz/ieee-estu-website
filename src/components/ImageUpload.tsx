@@ -151,7 +151,7 @@ export function ImageUpload({
               <div className="flex items-center gap-2 mt-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 <p className="text-sm text-muted-foreground">
-                  GitHub repo'ya yükleniyor...
+                  GitHub repo&apos;ya yükleniyor...
                 </p>
               </div>
             )}
@@ -166,7 +166,7 @@ export function ImageUpload({
       )}
 
       <p className="text-xs text-muted-foreground">
-        💡 Görsel direkt olarak GitHub repo'nuza commit edilecek
+        💡 Görsel direkt olarak GitHub repo&apos;nuza commit edilecek
       </p>
     </div>
   );

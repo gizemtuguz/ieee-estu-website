@@ -1,33 +1,57 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Users, ArrowLeft } from 'lucide-react';
-import { EVENTS } from '@/data/events';
+import { Calendar, Clock, MapPin, Users, ArrowLeft, Loader2 } from 'lucide-react';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase/client';
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return EVENTS.flatMap((event) => [
-    { locale: 'tr', slug: event.slug },
-    { locale: 'en', slug: event.slug },
-  ]);
+interface Event {
+  id: string;
+  slug: string;
+  title: { tr: string; en: string };
+  description: { tr: string; en: string };
+  date: string;
+  time: string;
+  location: { tr: string; en: string };
+  category: { tr: string; en: string };
+  image: string;
+  status: 'upcoming' | 'past';
+  statusLabel: { tr: string; en: string };
+  participants?: { tr: string; en: string };
+  registrationUrl?: string;
 }
 
-export default async function EventDetailPage({
-  params,
-}: {
-  params: Promise<{ locale: 'tr' | 'en'; slug: string }>;
-}) {
-  const { locale, slug } = await params;
-  const event = EVENTS.find((item) => item.slug === slug);
+export default function EventDetailPage() {
+  const params = useParams();
+  const locale = params.locale as 'tr' | 'en';
+  const slug = params.slug as string;
+  const [event, setEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!event) {
-    notFound();
-  }
+  useEffect(() => {
+    async function loadEvent() {
+      try {
+        const q = query(collection(db, 'events'), where('slug', '==', slug));
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          const eventData = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as Event;
+          setEvent(eventData);
+        }
+      } catch (error) {
+        console.error('Error fetching event:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadEvent();
+  }, [slug]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -40,6 +64,29 @@ export default async function EventDetailPage({
   };
 
   const backPath = locale === 'tr' ? '/tr/events' : '/en/events';
+
+  if (loading) {
+    return (
+      <SiteLayout>
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-[#00629B]" />
+        </div>
+      </SiteLayout>
+    );
+  }
+
+  if (!event) {
+    return (
+      <SiteLayout>
+        <div className="flex flex-col items-center justify-center py-20">
+          <h1 className="text-2xl font-bold mb-4">{locale === 'tr' ? 'Etkinlik bulunamadı' : 'Event not found'}</h1>
+          <Link href={backPath}>
+            <Button>{locale === 'tr' ? 'Etkinliklere Dön' : 'Back to Events'}</Button>
+          </Link>
+        </div>
+      </SiteLayout>
+    );
+  }
 
   return (
     <SiteLayout>
@@ -55,15 +102,18 @@ export default async function EventDetailPage({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-            <div className="relative h-72 lg:h-[480px] rounded-2xl overflow-hidden shadow-lg">
-              <Image
-                src={event.image}
-                alt={event.title[locale]}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
+            {event.image && (
+              <div className="relative h-72 lg:h-[480px] rounded-2xl overflow-hidden shadow-lg bg-gray-200">
+                <Image
+                  src={event.image}
+                  alt={event.title[locale]}
+                  fill
+                  className="object-cover"
+                  priority
+                  unoptimized
+                />
+              </div>
+            )}
 
             <div className="space-y-6">
               <div>
@@ -87,41 +137,18 @@ export default async function EventDetailPage({
                   <Clock className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
                   {event.time}
                 </div>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
-                  {event.location[locale]}
-                </div>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <Users className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
-                  {event.participants[locale]}
-                </div>
-              </div>
-
-              <Card className="border-0 rounded-2xl">
-                <CardContent className="p-6 space-y-4">
-                  {event.longDescription[locale].map((paragraph, index) => (
-                    <p key={index} className="text-muted-foreground leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </CardContent>
-              </Card>
-
-              <div>
-                <h2 className="text-xl font-semibold text-primary mb-3">
-                  {locale === 'tr' ? 'Öne Çıkanlar' : 'Highlights'}
-                </h2>
-                <div className="grid gap-3">
-                  {event.highlights[locale].map((highlight, index) => (
-                    <div key={index} className="flex items-start space-x-3">
-                      <span
-                        className="inline-block w-2 h-2 rounded-full mt-2"
-                        style={{ backgroundColor: '#00629B' }}
-                      />
-                      <p className="text-muted-foreground">{highlight}</p>
-                    </div>
-                  ))}
-                </div>
+                {event.location && (
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
+                    {event.location[locale]}
+                  </div>
+                )}
+                {event.participants && (
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Users className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
+                    {event.participants[locale]}
+                  </div>
+                )}
               </div>
 
               {event.registrationUrl && event.status === 'upcoming' && (

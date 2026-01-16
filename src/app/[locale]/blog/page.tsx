@@ -1,34 +1,64 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTranslations, useLocale } from 'next-intl';
+import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { db } from '@/lib/firebase/client';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, ArrowRight } from 'lucide-react';
-import { BLOG_POSTS, type LocaleKey } from '@/data/blogPosts';
-import { buildLocalizedPath, ENGLISH_ROUTES } from '@/i18n/paths';
+import { Calendar, Loader2 } from 'lucide-react';
+
+interface BlogPost {
+  id: string;
+  title: { tr: string; en: string };
+  excerpt: { tr: string; en: string };
+  content: { tr: string; en: string };
+  author: string;
+  category: string;
+  image: string;
+  date: string;
+  slug: string;
+  published: boolean;
+}
 
 export default function BlogPage() {
+  const params = useParams();
+  const locale = params.locale as string;
   const t = useTranslations('blog');
-  const locale = useLocale() as LocaleKey;
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const getCategoryColor = (category: string) => {
-    const categoryLower = category.toLowerCase();
-    if (categoryLower.includes('yarış') || categoryLower.includes('compet'))
-      return 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200';
-    if (categoryLower.includes('teknik') || categoryLower.includes('technical'))
-      return 'bg-slate-200 dark:bg-slate-700 text-gray-800 dark:text-gray-100';
-    if (categoryLower.includes('ieee'))
-      return 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200';
-    return 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100';
+  useEffect(() => {
+    loadBlogPosts();
+  }, []);
+
+  const loadBlogPosts = async () => {
+    try {
+      const q = query(
+        collection(db, 'blog'),
+        where('published', '==', true),
+        orderBy('date', 'desc')
+      );
+      const querySnapshot = await getDocs(q);
+      const blogPosts = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as BlogPost[];
+      setPosts(blogPosts);
+    } catch (error) {
+      console.error('Error loading blog posts:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const localeStr = locale === 'tr' ? 'tr-TR' : 'en-US';
-    return date.toLocaleDateString(localeStr, {
+    return date.toLocaleDateString(locale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -48,65 +78,65 @@ export default function BlogPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BLOG_POSTS.map((post) => {
-              const postPath = `/blog/${post.slug}/${locale}`;
-
-              return (
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-[#00629B]" />
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">
+                {locale === 'tr' ? 'Henüz blog yazısı yok' : 'No blog posts yet'}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {posts.map((post) => (
                 <Card
-                  key={post.slug}
-                  className="group hover:shadow-xl dark:hover:shadow-[#00629B]/20 dark:hover:ring-1 dark:hover:ring-[#00629B]/50 transition-all duration-300 rounded-2xl border-0 bg-white dark:bg-slate-950 hover:bg-white dark:hover:bg-slate-970 hover:-translate-y-1 cursor-pointer p-0 gap-0"
+                  key={post.id}
+                  className="group hover:shadow-xl transition-all duration-300 rounded-2xl border-0 hover:-translate-y-1 cursor-pointer overflow-hidden"
                 >
-                  <Link href={postPath} className="block">
-                    <div className="relative overflow-hidden rounded-t-2xl h-48">
+                  <Link href={`/${locale}/blog/${post.slug}`} className="block">
+                    <div className="relative h-48 w-full">
                       <Image
-                        src={post.image}
-                        alt={post.title[locale]}
+                        src={post.image || '/placeholder-blog.jpg'}
+                        alt={post.title[locale as 'tr' | 'en']}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        unoptimized
                       />
-                      <div className="absolute top-4 left-4">
-                        <Badge
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(post.category[locale])}`}
-                        >
-                          {post.category[locale]}
-                        </Badge>
-                      </div>
+                      {post.category && (
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-[#00629B]">
+                            {post.category}
+                          </Badge>
+                        </div>
+                      )}
                     </div>
                   </Link>
 
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-bold text-primary mb-3 line-clamp-2 group-hover:transition-colors duration-200">
-                      {post.title[locale]}
+                    <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-[#00629B] transition-colors">
+                      {post.title[locale as 'tr' | 'en']}
                     </h3>
 
                     <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
-                      {post.excerpt[locale]}
+                      {post.excerpt[locale as 'tr' | 'en']}
                     </p>
 
-                    <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="h-3 w-3" />
-                        <span>{formatDate(post.date)}</span>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <div className="flex items-center">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        {formatDate(post.date)}
                       </div>
-                      <span>{post.readTime[locale]}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <Link
-                        href={postPath}
-                        className="font-medium text-sm flex items-center group-hover:translate-x-1 transition-transform duration-200"
-                        style={{ color: '#00629B' }}
-                      >
-                        {t('readMore')}
-                        <ArrowRight className="ml-1 h-4 w-4" />
-                      </Link>
+                      {post.author && (
+                        <span className="text-xs">{post.author}</span>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </SiteLayout>

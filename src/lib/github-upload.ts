@@ -58,12 +58,12 @@ export async function uploadImageToGitHub(
       ...(sha && { sha }),
     });
 
-    // Generate public URL (assuming deployed on Vercel or similar)
-    const publicPath = path.replace('public/', '/');
+    // Generate GitHub raw content URL
+    const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`;
     
     return {
       success: true,
-      url: publicPath,
+      url: rawUrl,
       path: path,
     };
   } catch (error) {

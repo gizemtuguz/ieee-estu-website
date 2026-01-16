@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { ImageUpload } from '@/components/ImageUpload';
 import ReactMarkdown from 'react-markdown';
@@ -31,8 +31,11 @@ interface UploadedImage {
   name: string;
 }
 
-export default function CreateBlogPage() {
+export default function EditBlogPage() {
   const router = useRouter();
+  const params = useParams();
+  const postId = params.id as string;
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<'tr' | 'en'>('tr');
   const [previewMode, setPreviewMode] = useState(false);
@@ -48,17 +51,33 @@ export default function CreateBlogPage() {
     published: true,
   });
 
-  const generateSlug = (text: string) => {
-    return text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+  useEffect(() => {
+    loadBlogPost();
+  }, [postId]);
+
+  const loadBlogPost = async () => {
+    try {
+      const docRef = doc(db, 'blog', postId);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        const data = docSnap.data() as BlogFormData;
+        setFormData(data);
+      } else {
+        alert('Blog yazısı bulunamadı');
+        router.push('/admin/blog');
+      }
+    } catch (error) {
+      console.error('Error loading blog post:', error);
+      alert('Blog yazısı yüklenirken hata oluştu');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
     if (!formData.title.tr || !formData.title.en) {
       alert('Lütfen başlık alanlarını doldurun');
       return;
@@ -74,31 +93,30 @@ export default function CreateBlogPage() {
 
     setSaving(true);
     try {
-      const slug = generateSlug(formData.title.en);
-      
-      await addDoc(collection(db, 'blog'), {
+      const docRef = doc(db, 'blog', postId);
+      await updateDoc(docRef, {
         ...formData,
-        slug,
-        createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
 
-      alert('Blog yazısı başarıyla oluşturuldu!');
+      alert('Blog yazısı başarıyla güncellendi!');
       router.push('/admin/blog');
     } catch (error) {
-      console.error('Error creating blog post:', error);
-      alert('Blog yazısı oluşturulurken hata oluştu');
+      console.error('Error updating blog post:', error);
+      alert('Blog yazısı güncellenirken hata oluştu');
     } finally {
       setSaving(false);
     }
   };
 
+  const handleImageUpload = (url: string, path: string) => {
+    setFormData({ ...formData, image: url });
+  };
 
   const handleContentImageUpload = (url: string, path: string) => {
     const fileName = path.split('/').pop() || 'image';
     setUploadedImages([...uploadedImages, { url, name: fileName }]);
     
-    // Markdown formatında ekle
     const markdownImage = `\n![${fileName}](${url})\n`;
     const currentContent = formData.content[activeTab];
     setFormData({
@@ -153,22 +171,32 @@ export default function CreateBlogPage() {
       }
     });
   };
-  const handleImageUpload = (url: string, _path: string) => {
-    setFormData({ ...formData, image: url });
-  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Link href="/admin/blog">
-          <Button variant="outline" size="sm">
-            ← Geri
+          <Button variant="ghost" size="icon">
+            <ArrowLeft className="h-4 w-4" />
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold">Yeni Blog Yazısı</h1>
+        <div>
+          <h1 className="text-3xl font-bold">Blog Yazısını Düzenle</h1>
+          <p className="text-muted-foreground">
+            Blog yazısı bilgilerini güncelleyin
+          </p>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {/* Başlık */}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -187,6 +215,30 @@ export default function CreateBlogPage() {
               value={formData.title.en}
               onChange={(e) => setFormData({ ...formData, title: { ...formData.title, en: e.target.value } })}
               required
+            />
+          </div>
+        </div>
+
+        {/* Özet */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="excerpt-tr">Özet (Türkçe)</Label>
+            <Textarea
+              id="excerpt-tr"
+              value={formData.excerpt.tr}
+              onChange={(e) => setFormData({ ...formData, excerpt: { ...formData.excerpt, tr: e.target.value } })}
+              rows={3}
+              placeholder="Kısa bir özet yazın..."
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="excerpt-en">Excerpt (English)</Label>
+            <Textarea
+              id="excerpt-en"
+              value={formData.excerpt.en}
+              onChange={(e) => setFormData({ ...formData, excerpt: { ...formData.excerpt, en: e.target.value } })}
+              rows={3}
+              placeholder="Write a short excerpt..."
             />
           </div>
         </div>
@@ -257,7 +309,7 @@ export default function CreateBlogPage() {
 
             {/* Editor/Preview */}
             {previewMode ? (
-              <div className="prose dark:prose-invert max-w-none p-4 border rounded-lg min-h-100">
+              <div className="prose dark:prose-invert max-w-none p-4 border rounded-lg min-h-[400px]">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {formData.content[activeTab] || '*İçerik henüz girilmedi*'}
                 </ReactMarkdown>
@@ -292,54 +344,6 @@ export default function CreateBlogPage() {
             )}
           </CardContent>
         </Card>
-
-        {/* Özet */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="excerpt-tr">Özet (Türkçe)</Label>
-            <Textarea
-              id="excerpt-tr"
-              value={formData.excerpt.tr}
-              onChange={(e) => setFormData({ ...formData, excerpt: { ...formData.excerpt, tr: e.target.value } })}
-              rows={3}
-              placeholder="Kısa bir özet yazın..."
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="excerpt-en">Excerpt (English)</Label>
-            <Textarea
-              id="excerpt-en"
-              value={formData.excerpt.en}
-              onChange={(e) => setFormData({ ...formData, excerpt: { ...formData.excerpt, en: e.target.value } })}
-              rows={3}
-              placeholder="Write a short excerpt..."
-            />
-          </div>
-        </div>
-
-        {/* İçerik */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="content-tr">İçerik (Türkçe) *</Label>
-            <Textarea
-              id="content-tr"
-              value={formData.content.tr}
-              onChange={(e) => setFormData({ ...formData, content: { ...formData.content, tr: e.target.value } })}
-              rows={12}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="content-en">Content (English) *</Label>
-            <Textarea
-              id="content-en"
-              value={formData.content.en}
-              onChange={(e) => setFormData({ ...formData, content: { ...formData.content, en: e.target.value } })}
-              rows={12}
-              required
-            />
-          </div>
-        </div>
 
         {/* Yazar ve Kategori */}
         <div className="grid grid-cols-2 gap-4">
@@ -385,14 +389,18 @@ export default function CreateBlogPage() {
             className="h-4 w-4"
           />
           <Label htmlFor="published" className="cursor-pointer">
-            Hemen yayınla
+            Yayında
           </Label>
         </div>
 
         {/* Görsel Yükleme */}
         <div className="space-y-2">
           <Label>Öne Çıkan Görsel</Label>
-          <ImageUpload onUploadComplete={handleImageUpload} currentImageUrl={formData.image} />
+          <ImageUpload 
+            onUploadComplete={handleImageUpload} 
+            currentImageUrl={formData.image}
+            folder="blog"
+          />
         </div>
 
         {/* Butonlar */}
@@ -405,10 +413,10 @@ export default function CreateBlogPage() {
             {saving ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Oluşturuluyor...
+                Güncelleniyor...
               </>
             ) : (
-              'Oluştur'
+              'Güncelle'
             )}
           </Button>
           <Link href="/admin/blog">

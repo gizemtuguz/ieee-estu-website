@@ -71,7 +71,7 @@ export default function AdminDashboard() {
               • Blog yazısı oluşturma ve silme
             </li>
             <li className="text-sm">
-              • Görseller GitHub repository'ye otomatik yüklenir
+              • Görseller GitHub repository&apos;ye otomatik yüklenir
             </li>
             <li className="text-sm">
               • Çift dil desteği (Türkçe/İngilizce)

@@ -29,14 +29,16 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/admin');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Login error:', err);
       
-      if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+      const errorCode = err instanceof Error && 'code' in err ? (err as { code: string }).code : '';
+      
+      if (errorCode === 'auth/invalid-credential' || errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
         setError(t('errors.invalidCredentials'));
-      } else if (err.code === 'auth/invalid-email') {
+      } else if (errorCode === 'auth/invalid-email') {
         setError(t('errors.invalidEmail'));
-      } else if (err.code === 'auth/too-many-requests') {
+      } else if (errorCode === 'auth/too-many-requests') {
         setError(t('errors.tooManyAttempts'));
       } else {
         setError(t('errors.general'));

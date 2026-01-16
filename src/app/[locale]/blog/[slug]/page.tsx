@@ -1,135 +1,165 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase/client';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { SiteLayout } from '@/components/layout/SiteLayout';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Calendar, ArrowLeft } from 'lucide-react';
-import { BLOG_POSTS } from '@/data/blogPosts';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return BLOG_POSTS.flatMap((post) => [
-    { locale: 'tr', slug: post.slug },
-    { locale: 'en', slug: post.slug },
-  ]);
+interface BlogPost {
+  id: string;
+  title: { tr: string; en: string };
+  excerpt: { tr: string; en: string };
+  content: { tr: string; en: string };
+  author: string;
+  category: string;
+  image: string;
+  date: string;
+  slug: string;
+  published: boolean;
 }
 
-export default async function BlogDetailPage({
-  params,
-}: {
-  params: Promise<{ locale: 'tr' | 'en'; slug: string }>;
-}) {
-  const { locale, slug } = await params;
-  const post = BLOG_POSTS.find((item) => item.slug === slug);
+export default function BlogDetailPage() {
+  const params = useParams();
+  const locale = params.locale as string;
+  const slug = params.slug as string;
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!post) {
-    notFound();
-  }
+  useEffect(() => {
+    loadBlogPost();
+  }, [slug]);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const localeStr = locale === 'tr' ? 'tr-TR' : 'en-US';
-    return date.toLocaleDateString(localeStr, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+  const loadBlogPost = async () => {
+    try {
+      const q = query(
+        collection(db, 'blog'),
+        where('slug', '==', slug),
+        where('published', '==', true)
+      );
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const docData = querySnapshot.docs[0];
+        setPost({
+          id: docData.id,
+          ...docData.data(),
+        } as BlogPost);
+      }
+    } catch (error) {
+      console.error('Error loading blog post:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const backPath = locale === 'tr' ? '/tr/blog' : '/en/blog';
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <Loader2 className="h-8 w-8 animate-spin text-[#00629B]" />
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="container mx-auto px-4 py-12 text-center">
+        <h1 className="text-2xl font-bold mb-4">
+          {locale === 'tr' ? 'Blog Yazısı Bulunamadı' : 'Blog Post Not Found'}
+        </h1>
+        <p className="text-muted-foreground">
+          {locale === 'tr' 
+            ? 'Aradığınız blog yazısı bulunamadı.' 
+            : 'The blog post you are looking for could not be found.'}
+        </p>
+        <Link href={backPath} className="inline-flex items-center mt-4 text-[#00629B] hover:underline">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          {locale === 'tr' ? 'Bloga Dön' : 'Back to Blog'}
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <SiteLayout>
-      <section className="py-16 bg-gray-100 dark:bg-slate-900">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <Link href={backPath} className="flex items-center text-sm text-muted-foreground hover:text-primary">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {locale === 'tr' ? 'Bloga Dön' : 'Back to Blog'}
-            </Link>
+    <div className="container mx-auto px-4 py-12">
+      <Link href={backPath} className="inline-flex items-center text-sm text-muted-foreground hover:text-[#00629B] mb-8">
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        {locale === 'tr' ? 'Bloga Dön' : 'Back to Blog'}
+      </Link>
+      
+      <article className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+            <span>{new Date(post.date).toLocaleDateString(locale)}</span>
+            {post.category && (
+              <>
+                <span>•</span>
+                <span>{post.category}</span>
+              </>
+            )}
+            {post.author && (
+              <>
+                <span>•</span>
+                <span>{post.author}</span>
+              </>
+            )}
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="relative h-72 lg:h-[420px] rounded-2xl overflow-hidden shadow-lg">
-                <Image
-                  src={post.image}
-                  alt={post.title[locale]}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-
-              <div>
-                <Badge className="mb-3">
-                  {post.category[locale]}
-                </Badge>
-                <h1 className="text-3xl md:text-4xl font-bold text-primary mb-3">
-                  {post.title[locale]}
-                </h1>
-                <p className="text-muted-foreground text-lg">
-                  {post.excerpt[locale]}
-                </p>
-              </div>
-
-              <Card className="border-0 rounded-2xl">
-                <CardContent className="p-6 space-y-4">
-                  {post.content[locale].map((paragraph, index) => (
-                    <p key={index} className="text-muted-foreground leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-6">
-              <Card className="border-0 rounded-2xl">
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
-                    {formatDate(post.date)}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    <span className="font-medium text-primary">
-                      {locale === 'tr' ? 'Yazar' : 'Author'}:
-                    </span>{' '}
-                    {post.author[locale]}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    <span className="font-medium text-primary">
-                      {locale === 'tr' ? 'Okuma' : 'Read'}:
-                    </span>{' '}
-                    {post.readTime[locale]}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 rounded-2xl">
-                <CardContent className="p-6">
-                  <h2 className="text-lg font-semibold text-primary mb-4">
-                    {locale === 'tr' ? 'Öne Çıkanlar' : 'Highlights'}
-                  </h2>
-                  <div className="space-y-3">
-                    {post.highlights[locale].map((item, index) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <span
-                          className="inline-block w-2 h-2 rounded-full mt-2"
-                          style={{ backgroundColor: '#00629B' }}
-                        />
-                        <p className="text-muted-foreground text-sm">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            {post.title[locale as 'tr' | 'en']}
+          </h1>
+          {post.excerpt[locale as 'tr' | 'en'] && (
+            <p className="text-xl text-muted-foreground">
+              {post.excerpt[locale as 'tr' | 'en']}
+            </p>
+          )}
         </div>
-      </section>
-    </SiteLayout>
+
+        {/* Featured Image */}
+        {post.image && (
+          <div className="relative w-full h-[400px] mb-8 rounded-lg overflow-hidden">
+            <Image
+              src={post.image}
+              alt={post.title[locale as 'tr' | 'en']}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="prose prose-lg dark:prose-invert max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              img: ({ node, ...props }) => (
+                <img
+                  {...props}
+                  className="rounded-lg w-full h-auto"
+                  loading="lazy"
+                />
+              ),
+              a: ({ node, ...props }) => (
+                <a
+                  {...props}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#00629B] hover:underline"
+                />
+              ),
+            }}
+          >
+            {post.content[locale as 'tr' | 'en']}
+          </ReactMarkdown>
+        </div>
+      </article>
+    </div>
   );
 }

@@ -1,23 +1,64 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Users, ExternalLink } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, ExternalLink, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { buildLocalizedPath, ENGLISH_ROUTES } from '@/i18n/paths';
-import { EVENTS, type LocaleKey } from '@/data/events';
+import { type LocaleKey } from '@/data/events';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { db } from '@/lib/firebase/client';
+import { useParams } from 'next/navigation';
 
-export default async function EventsPage({
-  params,
-}: {
-  params: Promise<{ locale: LocaleKey }>;
-}) {
-  const { locale } = await params;
-  const t = await getTranslations('events');
-  const upcomingEvents = EVENTS.filter((event) => event.status === 'upcoming');
-  const pastEvents = EVENTS.filter((event) => event.status === 'past');
+interface Event {
+  id: string;
+  slug: string;
+  title: { tr: string; en: string };
+  description: { tr: string; en: string };
+  date: string;
+  time: string;
+  location: { tr: string; en: string };
+  category: { tr: string; en: string };
+  image: string;
+  status: 'upcoming' | 'past';
+  statusLabel: { tr: string; en: string };
+  participants?: { tr: string; en: string };
+  registrationUrl?: string;
+}
+
+export default function EventsPage() {
+  const params = useParams();
+  const locale = params.locale as LocaleKey;
+  const t = useTranslations('events');
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const q = query(collection(db, 'events'), orderBy('date', 'desc'));
+        const snapshot = await getDocs(q);
+        const eventsData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Event[];
+        setEvents(eventsData);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadEvents();
+  }, []);
+
+  const upcomingEvents = events.filter((event) => event.status === 'upcoming');
+  const pastEvents = events.filter((event) => event.status === 'past');
 
   const getCategoryColor = (category: string) => {
     const categoryKey = category.toLowerCase().replace(/\s+/g, '');
@@ -64,7 +105,7 @@ export default async function EventsPage({
     event,
     showApply = false,
   }: {
-    event: (typeof EVENTS)[number];
+    event: Event;
     showApply?: boolean;
   }) => {
     const eventPath = `/${locale}/events/${event.slug}`;
@@ -115,10 +156,12 @@ export default async function EventsPage({
               <MapPin className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
               <span>{event.location[locale]}</span>
             </div>
-            <div className="flex items-center text-muted-foreground text-sm">
-              <Users className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
-              <span>{event.participants[locale]}</span>
-            </div>
+            {event.participants && (
+              <div className="flex items-center text-muted-foreground text-sm">
+                <Users className="h-4 w-4 mr-2" style={{ color: '#00629B' }} />
+                <span>{event.participants[locale]}</span>
+              </div>
+            )}
           </div>
 
           <div className="flex-1 flex flex-col">
@@ -169,27 +212,47 @@ export default async function EventsPage({
             </p>
           </div>
 
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-primary mb-8 text-center">
-              {t('upcomingTitle')}
-            </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {upcomingEvents.map((event) => (
-                <EventCard key={event.slug} event={event} showApply />
-              ))}
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-[#00629B]" />
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="mb-16">
+                <h3 className="text-2xl font-bold text-primary mb-8 text-center">
+                  {t('upcomingTitle')}
+                </h3>
+                {upcomingEvents.length === 0 ? (
+                  <p className="text-center text-muted-foreground">
+                    {locale === 'tr' ? 'Henüz yaklaşan etkinlik yok' : 'No upcoming events yet'}
+                  </p>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {upcomingEvents.map((event) => (
+                      <EventCard key={event.id} event={event} showApply />
+                    ))}
+                  </div>
+                )}
+              </div>
 
-          <div>
-            <h3 className="text-2xl font-bold text-primary mb-8 text-center">
-              {t('pastTitle')}
-            </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {pastEvents.map((event) => (
-                <EventCard key={event.slug} event={event} />
-              ))}
-            </div>
-          </div>
+              <div>
+                <h3 className="text-2xl font-bold text-primary mb-8 text-center">
+                  {t('pastTitle')}
+                </h3>
+                {pastEvents.length === 0 ? (
+                  <p className="text-center text-muted-foreground">
+                    {locale === 'tr' ? 'Henüz geçmiş etkinlik yok' : 'No past events yet'}
+                  </p>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {pastEvents.map((event) => (
+                      <EventCard key={event.id} event={event} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
 
           <div className="mt-16">
             <Card className="border-0 rounded-2xl bg-[#00629B] dark:bg-[#00629B]">
