@@ -13,6 +13,7 @@ import {
   Image as ImageIcon,
   LogOut,
   Menu,
+  Mail,
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
@@ -47,6 +48,7 @@ export default function AdminLayout({
     { name: 'Panel', href: '/admin', icon: LayoutDashboard },
     { name: 'Etkinlikler', href: '/admin/events', icon: Calendar },
     { name: 'Blog', href: '/admin/blog', icon: FileText },
+    { name: 'Bülten', href: '/admin/newsletter', icon: Mail },
   ];
 
   if (loading) {

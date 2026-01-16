@@ -54,9 +54,9 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href={buildLocalizedPath(ENGLISH_ROUTES.home, locale)}
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-3"
         >
-          <div className="relative h-10 w-32">
+          <div className="relative h-10 w-32 flex-shrink-0">
             <Image
               src="/images/b4a3589a03f0b647872f4323459f2489a86615e3.png"
               alt="IEEE ESTU"
@@ -64,6 +64,14 @@ export function Navbar() {
               className="object-contain"
               priority
             />
+          </div>
+          <div className="hidden md:flex flex-col">
+            <span className="text-xs font-semibold leading-tight">
+              {locale === 'tr' ? 'Eskişehir Teknik Üniversitesi' : 'Eskisehir Technical University'}
+            </span>
+            <span className="text-xs text-muted-foreground leading-tight">
+              {locale === 'tr' ? 'Öğrenci Kolu' : 'Student Branch'}
+            </span>
           </div>
         </Link>
 
@@ -109,7 +117,10 @@ export function Navbar() {
           </Button>
 
           {/* Join Us Button */}
-          <Button className="hidden md:inline-flex bg-[#00629B] hover:bg-[#004A75]">
+          <Button 
+            className="hidden md:inline-flex bg-[#00629B] hover:bg-[#004A75]"
+            onClick={() => window.open('https://forms.gle/bxo6W7J8bTKuB7x58', '_blank')}
+          >
             {t('joinUs')}
           </Button>
 
@@ -121,9 +132,12 @@ export function Navbar() {
                 <span className="sr-only">{t('toggleMenu')}</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[85vw] sm:w-[400px]">
-              <div className="flex items-center mb-6">
-                <div className="relative h-12 w-40">
+            <SheetContent side="right" className="w-[85vw] sm:w-[400px] overflow-y-auto">
+              <SheetTitle className="sr-only">
+                {t('toggleMenu')}
+              </SheetTitle>
+              <div className="mb-6">
+                <div className="relative h-12 w-40 mb-2">
                   <Image
                     src="/images/b4a3589a03f0b647872f4323459f2489a86615e3.png"
                     alt="IEEE ESTU"
@@ -131,6 +145,14 @@ export function Navbar() {
                     className="object-contain"
                     priority
                   />
+                </div>
+                <div className="flex flex-col ml-1">
+                  <span className="text-sm font-semibold leading-tight">
+                    {locale === 'tr' ? 'Eskişehir Teknik Üniversitesi' : 'Eskisehir Technical University'}
+                  </span>
+                  <span className="text-sm text-muted-foreground leading-tight">
+                    {locale === 'tr' ? 'Öğrenci Kolu' : 'Student Branch'}
+                  </span>
                 </div>
               </div>
               <nav className="flex flex-col space-y-1">
@@ -147,7 +169,10 @@ export function Navbar() {
                 <div className="pt-4 mt-4 border-t space-y-2">
                   <Button
                     className="w-full bg-[#00629B] hover:bg-[#004A75] text-white"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      setIsOpen(false);
+                      window.open('https://forms.gle/bxo6W7J8bTKuB7x58', '_blank');
+                    }}
                   >
                     {t('joinUs')}
                   </Button>

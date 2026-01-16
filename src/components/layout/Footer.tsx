@@ -1,21 +1,101 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Loader2, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import { buildLocalizedPath, ENGLISH_ROUTES } from '@/i18n/paths';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export function Footer() {
   const t = useTranslations('footer');
   const nav = useTranslations('nav');
   const locale = useLocale();
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [honeypot, setHoneypot] = useState(''); // Bot trap
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Honeypot check - if filled, it's a bot
+    if (honeypot) {
+      console.log('Bot detected via honeypot');
+      return;
+    }
+    
+    // Email validation
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setMessage(locale === 'tr' ? 'Geçerli bir email adresi girin' : 'Enter a valid email address');
+      return;
+    }
+
+    // Check common disposable email domains
+    const disposableDomains = ['tempmail.com', 'throwaway.email', '10minutemail.com', 'guerrillamail.com', 'mailinator.com'];
+    const emailDomain = email.split('@')[1]?.toLowerCase();
+    if (disposableDomains.includes(emailDomain)) {
+      setMessage(locale === 'tr' ? 'Geçici email adresleri kabul edilmemektedir' : 'Disposable email addresses are not accepted');
+      return;
+    }
+
+    // Rate limiting - check localStorage
+    const lastSubscription = localStorage.getItem('lastNewsletterSubscription');
+    if (lastSubscription) {
+      const timeSinceLastSub = Date.now() - parseInt(lastSubscription);
+      const fiveMinutes = 5 * 60 * 1000;
+      if (timeSinceLastSub < fiveMinutes) {
+        const minutesLeft = Math.ceil((fiveMinutes - timeSinceLastSub) / 60000);
+        setMessage(
+          locale === 'tr' 
+            ? `Lütfen ${minutesLeft} dakika bekleyin` 
+            : `Please wait ${minutesLeft} minutes`
+        );
+        return;
+      }
+    }
+
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, locale }),
+      });
+
+      if (response.status === 409) {
+        setMessage(locale === 'tr' ? 'Bu email zaten kayıtlı' : 'This email is already registered');
+        setLoading(false);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error('Subscription failed');
+      }
+
+      // Set rate limiting timestamp
+      localStorage.setItem('lastNewsletterSubscription', Date.now().toString());
+
+      setMessage(locale === 'tr' ? '✓ Başarıyla abone oldunuz!' : '✓ Successfully subscribed!');
+      setEmail('');
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      setMessage(locale === 'tr' ? 'Bir hata oluştu. Lütfen tekrar deneyin.' : 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+      setTimeout(() => setMessage(''), 5000);
+    }
+  };
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: '#' },
-    { name: 'Twitter', icon: Twitter, href: '#' },
-    { name: 'Instagram', icon: Instagram, href: '#' },
-    { name: 'LinkedIn', icon: Linkedin, href: '#' },
-    { name: 'YouTube', icon: Youtube, href: '#' },
+    { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/ieee.estu/' },
+    { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/company/ieee-estu/' },
+    { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/ieeeestu' },
+    { name: 'Email', icon: Mail, href: 'mailto:ieee.estu@gmail.com' },
+    { name: 'Medium', icon: BookOpen, href: 'https://medium.com/@ieee-estu' },
   ];
 
   const quickLinks = [
@@ -79,20 +159,10 @@ export function Footer() {
                   IEEE Turkey
                 </a>
               </li>
-              <li>
-                <a
-                  href="https://www.estu.edu.tr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  ESTU
-                </a>
-              </li>
             </ul>
           </div>
 
-          {/* Social */}
+          {/* Social & Newsletter */}
           <div className="space-y-4">
             <h3 className="text-lg font-bold">{t('social')}</h3>
             <div className="flex space-x-4">
@@ -111,6 +181,52 @@ export function Footer() {
                   </a>
                 );
               })}
+            </div>
+            
+            {/* Newsletter */}
+            <div className="pt-4">
+              <div className="flex items-center mb-3">
+                <h3 className="text-lg font-bold">
+                  {locale === 'tr' ? 'Bülten' : 'Newsletter'}
+                </h3>
+              </div>
+              <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+                {/* Honeypot field - hidden from users, visible to bots */}
+                <input
+                  type="text"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  style={{ display: 'none' }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+                <Input
+                  type="email"
+                  placeholder={locale === 'tr' ? 'Email adresiniz' : 'Your email'}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  className="text-sm"
+                />
+                <Button 
+                  type="submit" 
+                  disabled={loading}
+                  className="bg-[#00629B] hover:bg-[#004A75] w-full"
+                  size="sm"
+                >
+                  {loading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    locale === 'tr' ? 'Abone Ol' : 'Subscribe'
+                  )}
+                </Button>
+              </form>
+              {message && (
+                <p className={`text-xs mt-2 ${message.includes('✓') ? 'text-green-600' : 'text-red-600'}`}>
+                  {message}
+                </p>
+              )}
             </div>
           </div>
         </div>

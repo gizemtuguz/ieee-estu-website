@@ -1,0 +1,21 @@
+{
+  "name": "IEEE ESTÜ Student Branch",
+  "short_name": "IEEE ESTU",
+  "description": "Eskişehir Teknik Üniversitesi IEEE Öğrenci Kolu (IEEE ESTÜ)",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00629B",
+  "icons": [
+    {
+      "src": "/images/5a2336625723febf4e09060e22c79f4ed9fe253e.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/5a2336625723febf4e09060e22c79f4ed9fe253e.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -40,14 +40,17 @@ export default function BlogPage() {
     try {
       const q = query(
         collection(db, 'blog'),
-        where('published', '==', true),
-        orderBy('date', 'desc')
+        where('published', '==', true)
       );
       const querySnapshot = await getDocs(q);
       const blogPosts = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as BlogPost[];
+      
+      // Sort by date on client side
+      blogPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      
       setPosts(blogPosts);
     } catch (error) {
       console.error('Error loading blog posts:', error);
@@ -91,12 +94,11 @@ export default function BlogPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <Card
-                  key={post.id}
-                  className="group hover:shadow-xl transition-all duration-300 rounded-2xl border-0 hover:-translate-y-1 cursor-pointer overflow-hidden"
-                >
-                  <Link href={`/${locale}/blog/${post.slug}`} className="block">
-                    <div className="relative h-48 w-full">
+                <Link key={post.id} href={`/${locale}/blog/${post.slug}`} className="block">
+                  <Card
+                    className="group hover:shadow-xl transition-all duration-300 rounded-2xl border-0 hover:-translate-y-1 cursor-pointer overflow-hidden h-full"
+                  >
+                    <div className="relative h-56 w-full">
                       <Image
                         src={post.image || '/placeholder-blog.jpg'}
                         alt={post.title[locale as 'tr' | 'en']}
@@ -112,28 +114,28 @@ export default function BlogPage() {
                         </div>
                       )}
                     </div>
-                  </Link>
 
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-[#00629B] transition-colors">
-                      {post.title[locale as 'tr' | 'en']}
-                    </h3>
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-[#00629B] transition-colors">
+                        {post.title[locale as 'tr' | 'en']}
+                      </h3>
 
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
-                      {post.excerpt[locale as 'tr' | 'en']}
-                    </p>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-3">
+                        {post.excerpt[locale as 'tr' | 'en']}
+                      </p>
 
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        {formatDate(post.date)}
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <div className="flex items-center">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          {formatDate(post.date)}
+                        </div>
+                        {post.author && (
+                          <span className="text-xs">{post.author}</span>
+                        )}
                       </div>
-                      {post.author && (
-                        <span className="text-xs">{post.author}</span>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           )}

@@ -13,18 +13,27 @@ export default function SubTeamsPage() {
 
   const teams = [
     {
-      key: 'rovstech',
-      gradient: 'from-blue-600 to-blue-700',
-      image:
-        'https://images.unsplash.com/photo-1562758778-e5638b5b6607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb2JvdGljcyUyMGNvbXBldGl0aW9uJTIwc3R1ZGVudHN8ZW58MXx8fHwxNzU3MjQ2MzkzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+      key: 'earendil',
+      gradient: 'from-green-600 to-green-700',
+      image: '/images/rover.jpg',
+      instagram: 'https://www.instagram.com/earendilroverteam/',
+      applicationForm: 'https://forms.gle/j2cCxRKxYmijHqTV8',
     },
     {
-      key: 'earendil',
-      gradient: 'from-orange-600 to-orange-700',
-      image:
-        'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb3ZlciUyMG1hcnMlMjByb2JvdGljc3xlbnwxfHx8fDE3NjExNzA1MTF8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      key: 'rovstech',
+      gradient: 'from-blue-600 to-blue-700',
+      image: '/images/rovstech.jpeg',
+      instagram: 'https://www.instagram.com/rovstech/',
+      applicationForm: 'https://forms.gle/XzSmajTXx7Ce4Jwn9',
     },
   ];
+
+  const earendilApplicationForm = teams.find(
+    (team) => team.key === 'earendil'
+  )?.applicationForm;
+  const rovstechApplicationForm = teams.find(
+    (team) => team.key === 'rovstech'
+  )?.applicationForm;
 
   return (
     <SiteLayout>
@@ -45,6 +54,10 @@ export default function SubTeamsPage() {
               const teamData = t.raw(team.key) as { name: string; description: string; tagline?: string; features: string[]; achievements: string[] };
               const features = teamData.features as string[];
               const achievements = teamData.achievements as string[];
+              const achievementsTitle =
+                team.key === 'rovstech'
+                  ? t('rovstech.missionVisionTitle')
+                  : t('achievementsTitle');
 
               return (
                 <Card
@@ -56,7 +69,7 @@ export default function SubTeamsPage() {
                   >
                     {/* Image */}
                     <div
-                      className={`relative h-80 lg:h-auto ${index % 2 === 1 ? 'lg:order-2' : ''}`}
+                      className={`relative h-64 lg:h-auto ${index % 2 === 1 ? 'lg:order-2' : ''}`}
                     >
                       <Image
                         src={team.image}
@@ -106,7 +119,7 @@ export default function SubTeamsPage() {
                       {/* Achievements */}
                       <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-6 mb-6">
                         <h4 className="font-semibold text-primary mb-3">
-                          {t('achievementsTitle')}
+                          {achievementsTitle}
                         </h4>
                         <ul className="space-y-2">
                           {achievements.map((achievement: string, idx: number) => (
@@ -129,14 +142,16 @@ export default function SubTeamsPage() {
                         <Button
                           className="text-white rounded-xl"
                           style={{ backgroundColor: '#00629B' }}
+                          onClick={() => window.open(team.instagram, '_blank')}
                         >
-                          {t('learnMore')}
+                          Instagram
                           <ExternalLink className="ml-2 h-4 w-4" />
                         </Button>
                         <Button
                           variant="outline"
                           className="rounded-xl border-2"
                           style={{ borderColor: '#00629B', color: '#00629B' }}
+                          onClick={() => window.open(team.applicationForm, '_blank')}
                         >
                           <Users className="mr-2 h-4 w-4" />
                           {t('joinTeam')}
@@ -174,12 +189,28 @@ export default function SubTeamsPage() {
               <p className="text-blue-100 mb-8 max-w-2xl mx-auto relative z-10">
                 {t('cta.description')}
               </p>
-              <Button
-                size="lg"
-                className="bg-white hover:bg-gray-100 text-[#00629B] px-8 py-3 rounded-xl font-medium shadow-lg relative z-10"
-              >
-                {t('cta.button')}
-              </Button>
+              <div className="flex flex-wrap justify-center gap-4 relative z-10">
+                <Button
+                  size="lg"
+                  className="bg-white hover:bg-gray-100 text-[#00629B] px-8 py-3 rounded-xl font-medium shadow-lg"
+                  onClick={() =>
+                    earendilApplicationForm &&
+                    window.open(earendilApplicationForm, '_blank')
+                  }
+                >
+                  {t('cta.earendilButton')}
+                </Button>
+                <Button
+                  size="lg"
+                  className="bg-white hover:bg-gray-100 text-[#00629B] px-8 py-3 rounded-xl font-medium shadow-lg"
+                  onClick={() =>
+                    rovstechApplicationForm &&
+                    window.open(rovstechApplicationForm, '_blank')
+                  }
+                >
+                  {t('cta.rovstechButton')}
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

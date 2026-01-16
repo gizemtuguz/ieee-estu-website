@@ -50,7 +50,7 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">200+</p>
+                  <p className="text-2xl font-bold">500+</p>
                   <p className="text-gray-300 text-sm">{t('hero.stats.members')}</p>
                 </div>
               </div>
@@ -73,27 +73,6 @@ export default function HomePage() {
                 <div>
                   <p className="text-2xl font-bold">50+</p>
                   <p className="text-gray-300 text-sm">{t('hero.stats.events')}</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3 text-white">
-                <div className="w-12 h-12 bg-[#00629B] rounded-xl flex items-center justify-center">
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">15+</p>
-                  <p className="text-gray-300 text-sm">{t('hero.stats.awards')}</p>
                 </div>
               </div>
             </div>

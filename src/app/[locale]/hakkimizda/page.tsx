@@ -109,13 +109,13 @@ export default function AboutPage() {
                 )}
               </div>
             </div>
-            <div className="relative">
+            <div className="relative overflow-hidden rounded-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1672917187338-7f81ecac3d3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBzdHVkZW50JTIwdGVhbSUyMG1lZXRpbmd8ZW58MXx8fHwxNzU3MjQ2MjcyfDA&ixlib=rb-4.1.0&q=80&w=1080"
+                src="/images/20251129_163533.JPEG"
                 alt="IEEE ESTU Team"
                 width={1080}
                 height={720}
-                className="rounded-2xl shadow-lg w-full h-auto"
+                className="rounded-2xl shadow-lg w-full h-auto scale-150"
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent rounded-2xl" />
             </div>

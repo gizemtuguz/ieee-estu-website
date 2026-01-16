@@ -87,7 +87,7 @@
   "team": {
     "title": "Our Team",
     "subtitle": "Meet the IEEE ESTU Student Branch team",
-    "joinButton": "Registration Form",
+    "joinButton": "Join Us",
     "join": "Join the Team",
     "joinDescription": "Fill out the registration form to join the IEEE ESTU family and take an active role in our events.",
     "sections": {
@@ -132,12 +132,12 @@
       "focus": ["Women Leaders", "Mentorship Programs", "Awareness Events", "Career Development"]
     },
     "kok": {
-      "name": "KÖK - Corporate Coordination",
-      "description": "Manages the club's corporate communication and sponsor relations, plays an active role in event organization.",
-      "focus": ["Sponsor Relations", "Corporate Communication", "Event Management", "Business Development"]
+      "name": "Student Branch Affinity Coordinatorship",
+      "description": "Coordinates with IEEE student branches across Turkey, organizes joint events, and strengthens inter-branch collaboration.",
+      "focus": ["Affinity Branch Communication", "Joint Events", "National Collaborations", "Student Branch Coordination"]
     },
     "pr": {
-      "name": "PR - Public Relations and Media",
+      "name": "Public Relations Coordinatorship",
       "description": "Conducts the club's social media and promotional activities, produces visual content.",
       "focus": ["Social Media", "Graphic Design", "Content Production", "Brand Management"]
     }
@@ -196,10 +196,10 @@
     "comingSoon": "Coming Soon",
     "comingSoonDescription": "Information about our sponsors and business partners will be available on this page soon.",
     "partnershipTitle": "Become Our Partner",
-    "partnershipDescription": "Reach a wide audience with our 200+ active members and 50+ annual events. Partner with IEEE ESTU to sponsor leading projects in technology and engineering.",
+    "partnershipDescription": "Reach a wide audience with our 500+ active members and 50+ annual events. Partner with IEEE ESTU to sponsor leading projects in technology and engineering.",
     "contactUs": "Contact Us",
     "benefits": {
-      "count1": "200+",
+      "count1": "500+",
       "label1": "Active Members",
       "count2": "50+",
       "label2": "Annual Events",
@@ -208,6 +208,50 @@
     }
   },
   "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Feel free to contact us for your questions, suggestions, or collaboration offers.",
+    "info": {
+      "address": "Address",
+      "addressDetails": [
+        "Eskisehir Technical University",
+        "Engineering Faculty",
+        "26555 Tepebaşı/Eskişehir"
+      ],
+      "email": "Email",
+      "emailDetails": [
+        "ieee.estu@gmail.com",
+        "info@ieeeestu.org"
+      ]
+    },
+    "social": {
+      "title": "Social Media"
+    },
+    "form": {
+      "title": "Send Message",
+      "name": "Full Name",
+      "namePlaceholder": "Your name and surname",
+      "email": "Email",
+      "emailPlaceholder": "example@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "05xx xxx xx xx",
+      "subject": "Subject",
+      "subjectPlaceholder": "Message subject",
+      "message": "Message",
+      "messageRequired": "Your Message",
+      "messagePlaceholder": "Write your message to us",
+      "privacy": "I accept the processing of my personal data.",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "successMessage": "Your message has been sent successfully! We will get back to you as soon as possible.",
+      "errorMessage": "An error occurred while sending the message. Please try again later.",
+      "requiredFields": "Please fill in all required fields.",
+      "privacyRequired": "Please accept the privacy policy.",
+      "defaultSubject": "Contact Form Message",
+      "rateLimitError": "Too many requests. Please wait a few minutes.",
+      "disposableEmailError": "Disposable email addresses are not accepted."
+    }
+  },
+  "oldContact": {
     "title": "Get in Touch",
     "subtitle": "Don't hesitate to contact us for your questions, suggestions, or collaboration offers.",
     "info": {
@@ -299,33 +343,34 @@
   },
   "subteams": {
     "title": "Our Teams",
-    "subtitle": "Technology teams operating under IEEE ESTU Student Branch",
+    "subtitle": "Project teams operating under IEEE ESTU Student Branch",
     "learnMore": "Learn More",
-    "joinTeam": "Join the Team",
+    "joinTeam": "Join Us",
     "achievementsTitle": "Achievements",
     "rovstech": {
-      "name": "Rovstech - ROV Team",
+      "name": "ROVSTECH - ROV TEAM",
       "tagline": "Underwater Robotics Team",
-      "description": "Our technology team develops underwater vehicles, participates in international competitions, and works on robotic systems. We represent our country at the MATE ROV Competition.",
+      "missionVisionTitle": "Mission and Vision",
+      "description": "Resuming activities this year, Rovstech is a dynamic team developing underwater technologies. We are preparing for Teknofest, with the future goal of representing our country internationally at the MATE ROV Competition.",
       "features": [
-        "Underwater robotic system design and production",
-        "Hydrodynamic analysis and testing",
-        "Autonomous navigation system development",
-        "Image processing and AI integration",
-        "Mechanical, electronic, and software team collaboration",
-        "International competition preparation"
+        "R&D Studies on Unmanned Underwater Systems",
+        "IEEE ESTU Supported Engineering Projects",
+        "Original Mechanical Design and Sealing Technology",
+        "Embedded Systems and Autonomous Navigation Algorithms",
+        "Image Processing and Object Detection Solutions",
+        "Preparation for Teknofest Unmanned Underwater Systems"
       ],
       "achievements": [
-        "MATE ROV Competition national finalist",
-        "3 different ROV prototypes developed",
-        "10+ active team members",
-        "National and international competition experience"
+        "A strong and dynamic team restructured under IEEE ESTU",
+        "Goal of becoming a finalist in the Teknofest Unmanned Underwater Systems Competition",
+        "Vision of international representation at the MATE ROV Competition",
+        "Interdisciplinary R&D culture in mechanical, software, and electronics fields"
       ]
     },
     "earendil": {
       "name": "Earendil - Mars Rover Team",
       "tagline": "Space Vehicles Team",
-      "description": "We push the boundaries of technology with our projects designing Mars rovers, developing AI-supported autonomous systems, and working on space technologies.",
+      "description": "We push the boundaries of technology with our project team, designing Mars rovers, developing AI-supported autonomous systems, and working on space technologies.",
       "features": [
         "Mars rover design and production",
         "Autonomous navigation systems",
@@ -344,7 +389,8 @@
     "cta": {
       "title": "Join Our Teams",
       "description": "Do you want to develop yourself in robotics, software, mechanics, or electronics? Our teams are always looking for new talents!",
-      "button": "Application Form"
+      "earendilButton": "Earendil Rover Team Application Form",
+      "rovstechButton": "Rovstech Team Application Form"
     }
   },
   "common": {

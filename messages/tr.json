@@ -87,7 +87,7 @@
   "team": {
     "title": "Ekibimiz",
     "subtitle": "IEEE ESTU Öğrenci Kolu ekibini tanıyın",
-    "joinButton": "Kayıt Formu",
+    "joinButton": "Aramıza Katıl",
     "join": "Aramıza Katılın",
     "joinDescription": "IEEE ESTU ailesine katılmak ve etkinliklerimizde aktif rol almak için kayıt formunu doldurun.",
     "sections": {
@@ -132,12 +132,12 @@
       "focus": ["Kadın Liderleri", "Mentorluk Programları", "Farkındalık Etkinlikleri", "Kariyer Gelişimi"]
     },
     "kok": {
-      "name": "KÖK - Kurumsal Koordinatörlük",
-      "description": "Kulübün kurumsal iletişimini ve sponsor ilişkilerini yönetir, etkinlik organizasyonunda aktif rol alır.",
-      "focus": ["Sponsor İlişkileri", "Kurumsal İletişim", "Etkinlik Yönetimi", "İş Geliştirme"]
+      "name": "Kardeş Öğrenci Kolu Koordinatörlüğü",
+      "description": "Türkiye genelindeki IEEE öğrenci kolları ile koordinasyon sağlar, ortak etkinlikler düzenler ve kollar arası iş birliğini güçlendirir.",
+      "focus": ["Kardeş Kollar İletişimi", "Ortak Etkinlikler", "Ulusal İş Birlikleri", "Öğrenci Kolu Koordinasyonu"]
     },
     "pr": {
-      "name": "PR - Halkla İlişkiler ve Medya",
+      "name": "Halkla İlişkiler Koordinatörlüğü",
       "description": "Kulübün sosyal medya ve tanıtım faaliyetlerini yürütür, görsel içerik üretir.",
       "focus": ["Sosyal Medya", "Grafik Tasarım", "İçerik Üretimi", "Marka Yönetimi"]
     }
@@ -196,10 +196,10 @@
     "comingSoon": "Çok Yakında",
     "comingSoonDescription": "Sponsorlarımız ve iş ortaklarımız hakkında bilgiler yakında bu sayfada yer alacak.",
     "partnershipTitle": "İş Ortağımız Olun",
-    "partnershipDescription": "200'den fazla aktif üyemiz ve yıllık düzenlediğimiz 50+ etkinlikle geniş bir kitleye ulaşın. IEEE ESTU ile iş birliği yaparak teknoloji ve mühendislik alanında öncü projelere sponsor olun.",
+    "partnershipDescription": "500'den fazla aktif üyemiz ve yıllık düzenlediğimiz 50+ etkinlikle geniş bir kitleye ulaşın. IEEE ESTU ile iş birliği yaparak teknoloji ve mühendislik alanında öncü projelere sponsor olun.",
     "contactUs": "Bize Ulaşın",
     "benefits": {
-      "count1": "200+",
+      "count1": "500+",
       "label1": "Aktif Üye",
       "count2": "50+",
       "label2": "Yıllık Etkinlik",
@@ -240,7 +240,15 @@
       "messageRequired": "Mesajınız",
       "messagePlaceholder": "Bize iletmek istediğiniz mesajı yazın",
       "privacy": "Kişisel verilerimin işlenmesini kabul ediyorum.",
-      "send": "Mesajı Gönder"
+      "send": "Mesajı Gönder",
+      "sending": "Gönderiliyor...",
+      "successMessage": "Mesajınız başarıyla gönderildi! En kısa sürede size geri dönüş yapacağız.",
+      "errorMessage": "Mesaj gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+      "requiredFields": "Lütfen tüm zorunlu alanları doldurun.",
+      "privacyRequired": "Lütfen gizlilik politikasını kabul edin.",
+      "defaultSubject": "İletişim Formu Mesajı",
+      "rateLimitError": "Çok fazla istek gönderdiniz. Lütfen birkaç dakika bekleyin.",
+      "disposableEmailError": "Geçici email adresleri kabul edilmemektedir."
     }
   },
   "blog": {
@@ -299,33 +307,34 @@
   },
   "subteams": {
     "title": "Takımlarımız",
-    "subtitle": "IEEE ESTU Öğrenci Kolu bünyesinde faaliyet gösteren teknoloji takımlarımız",
+    "subtitle": "IEEE ESTU Öğrenci Kolu bünyesinde faaliyet gösteren proje takımlarımız",
     "learnMore": "Detaylı Bilgi",
-    "joinTeam": "Takıma Katıl",
+    "joinTeam": "Aramıza Katıl",
     "achievementsTitle": "Başarılarımız",
     "rovstech": {
-      "name": "Rovstech - ROV Takımı",
+      "name": "ROVSTECH - ROV TAKIMI",
       "tagline": "Sualtı Robotik Takımı",
-      "description": "Su altı araçları geliştiren, uluslararası yarışmalara katılan ve robotik sistemler üzerinde çalışan teknoloji takımımız. MATE ROV Competition'da ülkemizi temsil etmekteyiz.",
+      "missionVisionTitle": "Misyon ve Vizyon",
+      "description": "Bu yıl faaliyetlerine yeniden başlayan Rovstech, su altı teknolojileri geliştiren dinamik bir ekiptir. Tecrübemizle Teknofest’e hazırlanıyor, gelecekte ise MATE ROV gibi uluslararası arenalarda ülkemizi temsil etmeyi hedefliyoruz.",
       "features": [
-        "Su altı robotik sistemleri tasarımı ve üretimi",
-        "Hidrodinamik analiz ve test",
-        "Otonom seyir sistemleri geliştirme",
-        "Görüntü işleme ve yapay zeka entegrasyonu",
-        "Mekanik, elektronik ve yazılım ekip çalışması",
-        "Uluslararası yarışmalara hazırlık"
+        "İnsansız Su Altı Sistemleri Ar-Ge Çalışmaları",
+        "IEEE ESTÜ Destekli Mühendislik Projeleri",
+        "Özgün Mekanik Tasarım ve Sızdırmazlık Teknolojisi",
+        "Gömülü Sistemler ve Otonom Sürüş Algoritmaları",
+        "Görüntü İşleme ve Nesne Tespiti Çözümleri",
+        "Teknofest İnsansız Su Altı Sistemleri Hazırlığı"
       ],
       "achievements": [
-        "MATE ROV Competition'da ülke finalisti",
-        "3 farklı ROV prototipi geliştirildi",
-        "10+ kişilik aktif ekip",
-        "Ulusal ve uluslararası yarışma deneyimi"
+        "IEEE ESTÜ çatısı altında yeniden yapılanan güçlü ve dinamik ekip",
+        "Teknofest İnsansız Su Altı Sistemleri Yarışması'nda finalist olma hedefi",
+        "MATE ROV Competition ile uluslararası temsil vizyonu",
+        "Mekanik, yazılım ve elektronik alanlarında disiplinlerarası Ar-Ge kültürü"
       ]
     },
     "earendil": {
       "name": "Earendil - Mars Rover Takımı",
       "tagline": "Uzay Araçları Takımı",
-      "description": "Mars gezgini tasarlayan, yapay zeka destekli otonom sistemler geliştiren ve uzay teknolojileri üzerine çalışan projelerimizle teknolojinin sınırlarını zorluyoruz.",
+      "description": "Mars gezgini tasarlayan, yapay zeka destekli otonom sistemler geliştiren ve uzay teknolojileri üzerine çalışan proje takımımızla teknolojinin sınırlarını zorluyoruz.",
       "features": [
         "Mars rover tasarımı ve üretimi",
         "Otonom navigasyon sistemleri",
@@ -344,7 +353,8 @@
     "cta": {
       "title": "Takımlarımıza Katılın",
       "description": "Robotik, yazılım, mekanik veya elektronik alanında kendinizi geliştirmek mi istiyorsunuz? Takımlarımız her zaman yeni yetenekler arıyor!",
-      "button": "Başvuru Formu"
+      "earendilButton": "Earendil Rover Takımı Başvuru Formu",
+      "rovstechButton": "Rovstech Takımı Başvuru Formu"
     }
   },
   "common": {

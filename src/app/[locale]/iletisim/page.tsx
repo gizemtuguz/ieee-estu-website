@@ -14,12 +14,38 @@ import {
   Instagram,
   Linkedin,
   Twitter,
-  Github,
+  BookOpen,
+  CheckCircle,
+  AlertCircle,
+  Loader2,
 } from 'lucide-react';
+
+type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  privacy: boolean;
+  honeypot: string; // Bot trap
+};
+
+type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export default function ContactPage() {
   const t = useTranslations('contact');
   const [isDark, setIsDark] = useState(false);
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
+    privacy: false,
+    honeypot: '',
+  });
 
   useEffect(() => {
     // Check initial theme
@@ -40,6 +66,117 @@ export default function ContactPage() {
     return () => observer.disconnect();
   }, []);
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('loading');
+    setErrorMessage('');
+
+    // Honeypot check - if filled, it's a bot
+    if (formData.honeypot) {
+      console.log('Bot detected via honeypot');
+      setFormStatus('error');
+      setErrorMessage('Invalid submission');
+      return;
+    }
+
+    // Form validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus('error');
+      setErrorMessage(t('form.requiredFields'));
+      return;
+    }
+
+    if (!formData.privacy) {
+      setFormStatus('error');
+      setErrorMessage(t('form.privacyRequired'));
+      return;
+    }
+
+    // Rate limiting check
+    const lastSubmission = localStorage.getItem('lastContactFormSubmission');
+    if (lastSubmission) {
+      const timeSinceLastSub = Date.now() - parseInt(lastSubmission);
+      const twoMinutes = 2 * 60 * 1000;
+      if (timeSinceLastSub < twoMinutes) {
+        setFormStatus('error');
+        setErrorMessage(t('form.rateLimitError'));
+        return;
+      }
+    }
+
+    // Check disposable email domains
+    const disposableDomains = ['tempmail.com', 'throwaway.email', '10minutemail.com', 'guerrillamail.com', 'mailinator.com'];
+    const emailDomain = formData.email.split('@')[1]?.toLowerCase();
+    if (disposableDomains.includes(emailDomain)) {
+      setFormStatus('error');
+      setErrorMessage(t('form.disposableEmailError'));
+      return;
+    }
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'YOUR_ACCESS_KEY_HERE',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject || t('form.defaultSubject'),
+          message: formData.message,
+          from_name: 'IEEE ESTU İletişim Formu',
+          replyto: formData.email,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFormStatus('success');
+        // Set rate limiting timestamp
+        localStorage.setItem('lastContactFormSubmission', Date.now().toString());
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+          privacy: false,
+          honeypot: '',
+        });
+        // Reset success message after 5 seconds
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        throw new Error(data.message || 'Form submission failed');
+      }
+    } catch (error) {
+      setFormStatus('error');
+      setErrorMessage(
+        error instanceof Error ? error.message : t('form.errorMessage')
+      );
+      // Reset error message after 5 seconds
+      setTimeout(() => {
+        setFormStatus('idle');
+        setErrorMessage('');
+      }, 5000);
+    }
+  };
+
   const contactInfo = [
     {
       icon: <MapPin className="h-6 w-6" />,
@@ -56,27 +193,27 @@ export default function ContactPage() {
   const socialLinks = [
     {
       name: 'Instagram',
-      handle: '@ieeeestu',
-      url: '#',
+      handle: '@ieee.estu',
+      url: 'https://www.instagram.com/ieee.estu/',
       icon: <Instagram className="h-5 w-5" />,
     },
     {
       name: 'LinkedIn',
       handle: 'IEEE ESTU',
-      url: '#',
+      url: 'https://www.linkedin.com/company/ieee-estu/',
       icon: <Linkedin className="h-5 w-5" />,
     },
     {
       name: 'Twitter',
       handle: '@ieeeestu',
-      url: '#',
+      url: 'https://twitter.com/ieeeestu',
       icon: <Twitter className="h-5 w-5" />,
     },
     {
-      name: 'GitHub',
-      handle: 'ieee-estu',
-      url: '#',
-      icon: <Github className="h-5 w-5" />,
+      name: 'Medium',
+      handle: '@ieee-estu',
+      url: 'https://medium.com/@ieee-estu',
+      icon: <BookOpen className="h-5 w-5" />,
     },
   ];
 
@@ -165,58 +302,137 @@ export default function ContactPage() {
                   <h3 className="text-2xl font-bold text-primary mb-6">
                     {t('form.title')}
                   </h3>
-                  <form className="space-y-6">
+
+                  {/* Success Message */}
+                  {formStatus === 'success' && (
+                    <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl flex items-center space-x-3">
+                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+                      <p className="text-sm text-green-800 dark:text-green-300">
+                        {t('form.successMessage')}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Error Message */}
+                  {formStatus === 'error' && errorMessage && (
+                    <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-center space-x-3">
+                      <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                      <p className="text-sm text-red-800 dark:text-red-300">
+                        {errorMessage}
+                      </p>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Honeypot field - hidden from users, visible to bots */}
+                    <input
+                      type="text"
+                      name="honeypot"
+                      value={formData.honeypot}
+                      onChange={handleInputChange}
+                      style={{ position: 'absolute', left: '-9999px' }}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                    />
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-primary mb-2">
-                          {t('form.name')}
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-primary mb-2"
+                        >
+                          {t('form.name')} <span className="text-red-500">*</span>
                         </label>
                         <Input
+                          id="name"
+                          name="name"
+                          type="text"
+                          required
+                          value={formData.name}
+                          onChange={handleInputChange}
                           placeholder={t('form.namePlaceholder')}
                           className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#00629B] focus:ring-[#00629B]"
+                          disabled={formStatus === 'loading'}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-primary mb-2">
-                          {t('form.email')}
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-primary mb-2"
+                        >
+                          {t('form.email')} <span className="text-red-500">*</span>
                         </label>
                         <Input
+                          id="email"
+                          name="email"
                           type="email"
+                          required
+                          value={formData.email}
+                          onChange={handleInputChange}
                           placeholder={t('form.emailPlaceholder')}
                           className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#00629B] focus:ring-[#00629B]"
+                          disabled={formStatus === 'loading'}
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-primary mb-2">
+                        <label
+                          htmlFor="phone"
+                          className="block text-sm font-medium text-primary mb-2"
+                        >
                           {t('form.phone')}
                         </label>
                         <Input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          value={formData.phone}
+                          onChange={handleInputChange}
                           placeholder={t('form.phonePlaceholder')}
                           className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#00629B] focus:ring-[#00629B]"
+                          disabled={formStatus === 'loading'}
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-primary mb-2">
+                        <label
+                          htmlFor="subject"
+                          className="block text-sm font-medium text-primary mb-2"
+                        >
                           {t('form.subject')}
                         </label>
                         <Input
+                          id="subject"
+                          name="subject"
+                          type="text"
+                          value={formData.subject}
+                          onChange={handleInputChange}
                           placeholder={t('form.subjectPlaceholder')}
                           className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#00629B] focus:ring-[#00629B]"
+                          disabled={formStatus === 'loading'}
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-primary mb-2">
-                        {t('form.messageRequired')}
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-primary mb-2"
+                      >
+                        {t('form.messageRequired')} <span className="text-red-500">*</span>
                       </label>
                       <Textarea
+                        id="message"
+                        name="message"
+                        required
+                        value={formData.message}
+                        onChange={handleInputChange}
                         placeholder={t('form.messagePlaceholder')}
                         rows={6}
                         className="rounded-xl border-gray-200 dark:border-gray-700 focus:border-[#00629B] focus:ring-[#00629B] resize-none"
+                        disabled={formStatus === 'loading'}
                       />
                     </div>
 
@@ -224,33 +440,55 @@ export default function ContactPage() {
                       <input
                         type="checkbox"
                         id="privacy"
+                        name="privacy"
+                        required
+                        checked={formData.privacy}
+                        onChange={handleInputChange}
                         className="mt-1 w-4 h-4 border-gray-300 rounded"
                         style={{ accentColor: '#00629B' }}
+                        disabled={formStatus === 'loading'}
                       />
                       <label
                         htmlFor="privacy"
                         className="text-sm text-muted-foreground"
                       >
-                        {t('form.privacy')}
+                        {t('form.privacy')} <span className="text-red-500">*</span>
                       </label>
                     </div>
 
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full text-white rounded-xl py-3 font-medium transition-all duration-200"
+                      disabled={formStatus === 'loading'}
+                      className="w-full text-white rounded-xl py-3 font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       style={{
-                        background: `linear-gradient(to right, #00629B, #004f7c)`,
+                        background:
+                          formStatus === 'loading'
+                            ? '#6b7280'
+                            : `linear-gradient(to right, #00629B, #004f7c)`,
                       }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.background = `linear-gradient(to right, #004f7c, #003a5c)`)
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.background = `linear-gradient(to right, #00629B, #004f7c)`)
-                      }
+                      onMouseEnter={(e) => {
+                        if (formStatus !== 'loading') {
+                          e.currentTarget.style.background = `linear-gradient(to right, #004f7c, #003a5c)`;
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (formStatus !== 'loading') {
+                          e.currentTarget.style.background = `linear-gradient(to right, #00629B, #004f7c)`;
+                        }
+                      }}
                     >
-                      <Send className="mr-2 h-5 w-5" />
-                      {t('form.send')}
+                      {formStatus === 'loading' ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          {t('form.sending')}
+                        </>
+                      ) : (
+                        <>
+                          <Send className="mr-2 h-5 w-5" />
+                          {t('form.send')}
+                        </>
+                      )}
                     </Button>
                   </form>
                 </CardContent>

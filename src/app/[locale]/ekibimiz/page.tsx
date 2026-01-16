@@ -4,7 +4,6 @@ import { useTranslations, useLocale } from 'next-intl';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Linkedin, Mail, Github } from 'lucide-react';
 import { teamMembers } from '@/data/teamMembers';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,26 +13,17 @@ export default function TeamPage() {
   const t = useTranslations('team');
   const locale = useLocale() as 'tr' | 'en';
 
-  const getPositionColor = (position: string) => {
-    if (
-      position.includes('Başkan') ||
-      position.includes('President') ||
-      position.includes('Chair')
-    )
-      return 'text-white';
-    if (position.includes('Koordinatör') || position.includes('Coordinator'))
-      return 'bg-green-600 dark:bg-green-700 text-white';
-    return 'bg-gray-600 dark:bg-gray-700 text-white';
-  };
-
-  const getPositionStyle = (position: string) => {
-    if (
-      position.includes('Başkan') ||
-      position.includes('President') ||
-      position.includes('Chair')
-    )
-      return { backgroundColor: '#00629B' };
-    return {};
+  const getBadgeColor = (sectionKey: string) => {
+    switch (sectionKey) {
+      case 'boardOfDirectors':
+        return { backgroundColor: '#00629B', color: 'white' }; // Mavi
+      case 'administrativeBoard':
+        return { backgroundColor: '#1E3A8A', color: 'white' }; // Koyu Mavi
+      case 'auditBoard':
+        return { backgroundColor: '#38BDF8', color: 'white' }; // Açık Mavi
+      default:
+        return { backgroundColor: '#6B7280', color: 'white' };
+    }
   };
 
   const renderSection = (
@@ -59,7 +49,7 @@ export default function TeamPage() {
             return (
               <Card
                 key={index}
-                className="group hover:shadow-xl dark:hover:shadow-[#00629B]/20 dark:hover:ring-1 dark:hover:ring-[#00629B]/50 transition-all duration-300 rounded-2xl border-0 bg-white dark:bg-slate-950 hover:bg-white dark:hover:bg-slate-970 hover:-translate-y-1"
+                className="group hover:shadow-xl dark:hover:shadow-[#00629B]/20 dark:hover:ring-1 dark:hover:ring-[#00629B]/50 transition-all duration-300 rounded-2xl border-0 bg-white dark:bg-slate-950 hover:-translate-y-1"
               >
                 <CardContent className="p-6">
                   {/* Profile Image with Professional Frame */}
@@ -84,8 +74,8 @@ export default function TeamPage() {
                     </h3>
 
                     <Badge
-                      className={`mb-3 px-3 py-1 rounded-full text-xs font-medium ${getPositionColor(memberData.position)}`}
-                      style={getPositionStyle(memberData.position)}
+                      className="mb-3 px-3 py-1 rounded-full text-xs font-medium"
+                      style={getBadgeColor(sectionKey)}
                     >
                       {memberData.position}
                     </Badge>
@@ -96,19 +86,6 @@ export default function TeamPage() {
                     >
                       {memberData.department}
                     </p>
-
-                    {/* Social Links */}
-                    <div className="flex justify-center space-x-3">
-                      <button className="w-8 h-8 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-[#00629B] hover:text-white dark:hover:bg-[#00629B] dark:hover:text-white rounded-lg flex items-center justify-center transition-colors duration-200">
-                        <Linkedin className="h-4 w-4" />
-                      </button>
-                      <button className="w-8 h-8 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-[#00629B] hover:text-white dark:hover:bg-[#00629B] dark:hover:text-white rounded-lg flex items-center justify-center transition-colors duration-200">
-                        <Mail className="h-4 w-4" />
-                      </button>
-                      <button className="w-8 h-8 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300 hover:bg-[#00629B] hover:text-white dark:hover:bg-[#00629B] dark:hover:text-white rounded-lg flex items-center justify-center transition-colors duration-200">
-                        <Github className="h-4 w-4" />
-                      </button>
-                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -153,11 +130,12 @@ export default function TeamPage() {
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                 {t('joinDescription')}
               </p>
-              <Link href={buildLocalizedPath(ENGLISH_ROUTES.membership, locale)}>
-                <button className="bg-[#00629B] hover:bg-[#004f7c] text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg dark:shadow-[#00629B]/30 dark:hover:shadow-[#00629B]/50 dark:hover:ring-2 dark:hover:ring-[#00629B]/50">
-                  {t('joinButton')}
-                </button>
-              </Link>
+              <button 
+                className="bg-[#00629B] hover:bg-[#004f7c] text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 shadow-md hover:shadow-lg dark:shadow-[#00629B]/30 dark:hover:shadow-[#00629B]/50 dark:hover:ring-2 dark:hover:ring-[#00629B]/50"
+                onClick={() => window.open('https://forms.gle/bxo6W7J8bTKuB7x58', '_blank')}
+              >
+                {t('joinButton')}
+              </button>
             </div>
           </div>
         </div>

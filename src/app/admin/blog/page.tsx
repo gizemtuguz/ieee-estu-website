@@ -40,12 +40,16 @@ export default function AdminBlogPage() {
 
   const loadPosts = async () => {
     try {
-      const q = query(collection(db, 'blog'), orderBy('date', 'desc'));
+      const q = query(collection(db, 'blog'));
       const snapshot = await getDocs(q);
       const postsData = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
       })) as BlogPost[];
+      
+      // Sort by date on client side
+      postsData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      
       setPosts(postsData);
     } catch (error) {
       console.error('Error loading blog posts:', error);

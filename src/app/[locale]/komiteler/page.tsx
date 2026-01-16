@@ -22,49 +22,49 @@ export default function CommitteesPage() {
     {
       key: 'aess',
       icon: Plane,
-      color: '#00629B',
-      gradient: 'from-blue-500 to-blue-600',
-      image: '/images/aess.png',
+      color: '#6B7280',
+      gradient: 'from-gray-500 to-gray-600',
+      image: '/images/06f93da914f3175ed19bd187ffd4e57ebf4b0fcf.png',
     },
     {
       key: 'comsoc',
       icon: Radio,
-      color: '#5C4B99',
-      gradient: 'from-purple-500 to-purple-600',
+      color: '#3B82F6',
+      gradient: 'from-blue-500 to-blue-600',
       image:
-        'https://images.unsplash.com/photo-1679857768766-4c6a46db3301?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3aXJlbGVzcyUyMGNvbW11bmljYXRpb24lMjBuZXR3b3JrfGVufDF8fHx8MTc2MTE3NDIyNHww&ixlib=rb-4.1.0&q=80&w=1080',
+        '/images/comsoc.png',
     },
     {
       key: 'cs',
       icon: Cpu,
-      color: '#2D7A89',
-      gradient: 'from-teal-500 to-teal-600',
+      color: '#F97316',
+      gradient: 'from-orange-500 to-orange-600',
       image:
-        'https://images.unsplash.com/photo-1739805591936-39f03383c9a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlJTIwY29tcHV0ZXJ8ZW58MXx8fHwxNzYxMTc0MjI0fDA&ixlib=rb-4.1.0&q=80&w=1080',
+        '/images/gff.png',
     },
     {
       key: 'pes',
       icon: Zap,
-      color: '#8B6F47',
-      gradient: 'from-amber-500 to-amber-600',
+      color: '#22C55E',
+      gradient: 'from-green-500 to-green-600',
       image:
-        'https://images.unsplash.com/photo-1668196469278-1dae4d5b25d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzb2xhciUyMHJlbmV3YWJsZSUyMGVuZXJneXxlbnwxfHx8fDE3NjExNzQyMjV8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        '/images/pes.png',
     },
     {
       key: 'wie',
       icon: Users,
-      color: '#9B4B6F',
-      gradient: 'from-pink-500 to-pink-600',
+      color: '#A855F7',
+      gradient: 'from-purple-500 to-purple-600',
       image:
-        'https://images.unsplash.com/photo-1748348209623-906c42dd1f7b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21lbiUyMGVuZ2luZWVycyUyMHRlYW18ZW58MXx8fHwxNzYxMTc0MjI1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+        '/images/wie.jpg',
     },
     {
       key: 'kok',
       icon: Calendar,
-      color: '#4B7C99',
-      gradient: 'from-cyan-500 to-cyan-600',
+      color: '#EAB308',
+      gradient: 'from-yellow-500 to-yellow-600',
       image:
-        'https://images.unsplash.com/photo-1531545514256-b1400bc00f31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWFtJTIwY29sbGFib3JhdGlvbiUyMG1lZXRpbmd8ZW58MXx8fHwxNzYxMTc0MjI2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+        '/images/kok.jpeg',
     },
     {
       key: 'pr',
@@ -72,7 +72,7 @@ export default function CommitteesPage() {
       color: '#6B8B47',
       gradient: 'from-green-500 to-green-600',
       image:
-        'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzb2NpYWwlMjBtZWRpYSUyMG1hcmtldGluZ3xlbnwxfHx8fDE3NjExNjc3Njl8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        '/images/pr.jpg',
     },
   ];
 
