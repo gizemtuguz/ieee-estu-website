@@ -1,0 +1,413 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "team": "Ekibimiz",
+    "committees": "Komite & Koordinatörlüklerimiz",
+    "subteams": "Takımlarımız",
+    "events": "Etkinlikler",
+    "sponsors": "Sponsorlar",
+    "contact": "İletişim",
+    "blog": "Blog",
+    "xtreme": "Xtreme",
+    "joinUs": "Üye Ol",
+    "menuTitle": "Menü",
+    "menuDescription": "IEEE ESTU sayfalarında gezin",
+    "toggleLanguage": "Dil değiştir",
+    "toggleTheme": "Tema değiştir",
+    "toggleMenu": "Menüyü aç/kapat",
+    "language": {
+      "english": "English",
+      "turkish": "Türkçe"
+    }
+  },
+  "hero": {
+    "title": "IEEE ESTU Öğrenci Kolu",
+    "subtitle": "Eskişehir Teknik Üniversitesi",
+    "description": "Teknoloji ve mühendislik alanında öğrencilerin gelişimini destekleyen, yenilikçi projeler ve etkinlikler düzenleyen öğrenci topluluğu.",
+    "cta": "Hakkımızda",
+    "joinUs": "Üye Ol",
+    "stats": {
+      "members": "Aktif Üye",
+      "events": "Etkinlik",
+      "awards": "Ödül"
+    }
+  },
+  "eventsCallout": {
+    "title": "Etkinliklerimizi Keşfedin",
+    "description": "Workshop'lardan yarışmalara, seminerlerden proje günlerine kadar birçok etkinlik düzenliyoruz. Gelişiminize katkı sağlayacak etkinliklerimizi kaçırmayın!",
+    "stats": {
+      "workshops": "25+",
+      "workshopsLabel": "Workshop & Seminer",
+      "competitions": "10+",
+      "competitionsLabel": "Yarışma",
+      "participants": "500+",
+      "participantsLabel": "Katılımcı"
+    },
+    "button": "Tüm Etkinlikleri Gör"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "intro": [
+      "IEEE ESTU Öğrenci Kolu, Eskişehir Teknik Üniversitesi'nde teknoloji ve mühendislik alanında faaliyet gösteren, yenilikçi ve dinamik bir öğrenci topluluğudur.",
+      "Dünya'nın en büyük teknik profesyonel organizasyonu olan IEEE'nin bir parçası olarak, üyelerimize teknik ve kişisel gelişim fırsatları sunuyoruz.",
+      "Workshop'lar, seminerler, yarışmalar ve sosyal etkinliklerle üyelerimizin kariyerlerine değer katıyoruz."
+    ],
+    "callout": "IEEE ESTU Öğrenci Kolu, 2024-2025 akademik yılında aşağıdaki yönetim kadrosuyla hizmet vermektedir:",
+    "president": "Kulüp Başkanı",
+    "advisor": "Kulüp Danışmanı",
+    "mission": "Misyonumuz",
+    "missionText": "Üyelerimizin teknik ve kişisel gelişimini destekleyerek toplumda teknoloji odaklı dönüşüme katkı sağlamak.",
+    "features": {
+      "innovation": {
+        "title": "Yenilikçilik",
+        "description": "Teknolojinin sınırlarını zorlayan projeler ve etkinlikler düzenliyoruz."
+      },
+      "community": {
+        "title": "Topluluk",
+        "description": "Güçlü bir network oluşturarak üyelerimizi sektörle buluşturuyoruz."
+      },
+      "goalOriented": {
+        "title": "Hedef Odaklı",
+        "description": "Kariyer hedeflerine ulaşmak için gerekli becerileri kazandırıyoruz."
+      },
+      "growth": {
+        "title": "Gelişim",
+        "description": "Teknik ve sosyal becerilerde sürekli gelişim sağlıyoruz."
+      }
+    },
+    "missionPoints": [
+      "Üyelerimize teknik ve mesleki gelişim fırsatları sunmak",
+      "Üniversite-sanayi işbirliğini güçlendirmek",
+      "Öğrencilerin liderlik ve ekip çalışması becerilerini geliştirmek",
+      "Teknoloji ve mühendislik alanında farkındalık oluşturmak",
+      "Ulusal ve uluslararası projelerde aktif rol almak"
+    ]
+  },
+  "team": {
+    "title": "Ekibimiz",
+    "subtitle": "IEEE ESTU Öğrenci Kolu ekibini tanıyın",
+    "joinButton": "Kayıt Formu",
+    "join": "Aramıza Katılın",
+    "joinDescription": "IEEE ESTU ailesine katılmak ve etkinliklerimizde aktif rol almak için kayıt formunu doldurun.",
+    "sections": {
+      "boardOfDirectors": "Yönetim Kurulumuz",
+      "administrativeBoard": "İdari Kurulumuz",
+      "auditBoard": "Denetim Kurulumuz"
+    },
+    "positions": {
+      "president": "Başkan",
+      "vicePresident": "Başkan Yardımcısı",
+      "coordinator": "Koordinatör",
+      "responsible": "Sorumlu"
+    }
+  },
+  "committees": {
+    "title": "Komite ve Koordinatörlüklerimiz",
+    "subtitle": "IEEE ESTU Öğrenci Kolu bünyesindeki teknik komiteler ve koordinatörlükler",
+    "focusAreas": "Odak Alanları",
+    "aess": {
+      "name": "AESS - Havacılık ve Elektronik Sistemler",
+      "description": "Havacılık, uzay ve savunma sistemleri alanında teknolojik gelişmeleri takip eder ve projeler geliştirir.",
+      "focus": ["Havacılık Teknolojileri", "Uzay Sistemleri", "Savunma Elektroniği", "Otonom Sistemler"]
+    },
+    "comsoc": {
+      "name": "ComSoc - İletişim Topluluğu",
+      "description": "Haberleşme sistemleri ve ağ teknolojileri üzerine çalışmalar yapar, 5G ve ötesi teknolojilerde uzmanlaşır.",
+      "focus": ["Kablosuz İletişim", "5G Teknolojileri", "Ağ Güvenliği", "IoT"]
+    },
+    "cs": {
+      "name": "CS - Bilgisayar Topluluğu",
+      "description": "Yapay zeka, makine öğrenmesi ve yazılım geliştirme alanlarında projeler yürütür.",
+      "focus": ["Yapay Zeka", "Makine Öğrenmesi", "Yazılım Geliştirme", "Veri Bilimi"]
+    },
+    "pes": {
+      "name": "PES - Güç ve Enerji Topluluğu",
+      "description": "Yenilenebilir enerji, akıllı şebekeler ve enerji verimliliği konularında çalışmalar yapar.",
+      "focus": ["Yenilenebilir Enerji", "Akıllı Şebekeler", "Enerji Verimliliği", "Güç Sistemleri"]
+    },
+    "wie": {
+      "name": "WIE - Mühendislikte Kadınlar",
+      "description": "Kadınların mühendislik ve teknoloji alanlarında aktif rol almasını teşvik eder ve destekler.",
+      "focus": ["Kadın Liderleri", "Mentorluk Programları", "Farkındalık Etkinlikleri", "Kariyer Gelişimi"]
+    },
+    "kok": {
+      "name": "KÖK - Kurumsal Koordinatörlük",
+      "description": "Kulübün kurumsal iletişimini ve sponsor ilişkilerini yönetir, etkinlik organizasyonunda aktif rol alır.",
+      "focus": ["Sponsor İlişkileri", "Kurumsal İletişim", "Etkinlik Yönetimi", "İş Geliştirme"]
+    },
+    "pr": {
+      "name": "PR - Halkla İlişkiler ve Medya",
+      "description": "Kulübün sosyal medya ve tanıtım faaliyetlerini yürütür, görsel içerik üretir.",
+      "focus": ["Sosyal Medya", "Grafik Tasarım", "İçerik Üretimi", "Marka Yönetimi"]
+    }
+  },
+  "events": {
+    "title": "Etkinliklerimiz",
+    "subtitle": "IEEE ESTU Öğrenci Kolu olarak düzenlediğimiz workshop'lar, seminerler, yarışmalar ve sosyal etkinliklerle üyelerimizin gelişimine katkı sağlıyoruz.",
+    "upcomingTitle": "Yaklaşan Etkinlikler",
+    "pastTitle": "Geçmiş Etkinlikler",
+    "upcoming": "Yaklaşan Etkinlikler",
+    "past": "Geçmiş Etkinlikler",
+    "details": "Detaylar",
+    "register": "Kayıt Ol",
+    "applyButton": "Başvuru Formu",
+    "upcoming1": {
+      "title": "Yapay Zeka ve Makine Öğrenmesi Workshop'u",
+      "location": "ESTU Mühendislik Fakültesi",
+      "category": "Workshop",
+      "description": "Python ve TensorFlow ile pratik uygulamalarla makine öğrenmesine giriş yapıyoruz.",
+      "participants": "100+ katılımcı",
+      "status": "Kayıt Açık"
+    },
+    "upcoming2": {
+      "title": "IEEE Xtreme 18.0 Programlama Yarışması",
+      "location": "Online",
+      "category": "Yarışma",
+      "description": "24 saat süren küresel maratonda takımımızla algoritma problemleri çözüyoruz.",
+      "participants": "200+ katılımcı",
+      "status": "Yakında"
+    },
+    "past1": {
+      "title": "Siber Güvenlik Semineri",
+      "location": "ESTU Konferans Salonu",
+      "category": "Seminer",
+      "description": "Sektör uzmanlarıyla güvenlik trendleri ve kariyer fırsatlarını konuştuk.",
+      "participants": "150+ katılımcı",
+      "status": "Tamamlandı"
+    },
+    "past2": {
+      "title": "ROV Proje Günü",
+      "location": "ESTU Laboratuvarları",
+      "category": "Proje Günü",
+      "description": "Takımlarımızın geliştirdiği prototipleri tanıttığımız proje günü gerçekleştirdik.",
+      "participants": "80+ katılımcı",
+      "status": "Tamamlandı"
+    },
+    "newsletter": {
+      "title": "Etkinliklerden Haberdar Olun",
+      "description": "Yeni etkinlikler, eğitimler ve duyurular için bültenimize katılın.",
+      "button": "Bültene Katıl"
+    }
+  },
+  "sponsors": {
+    "title": "Sponsorlarımız",
+    "subtitle": "IEEE ESTU Öğrenci Kolu'nu destekleyen değerli iş ortaklarımız.",
+    "comingSoon": "Çok Yakında",
+    "comingSoonDescription": "Sponsorlarımız ve iş ortaklarımız hakkında bilgiler yakında bu sayfada yer alacak.",
+    "partnershipTitle": "İş Ortağımız Olun",
+    "partnershipDescription": "200'den fazla aktif üyemiz ve yıllık düzenlediğimiz 50+ etkinlikle geniş bir kitleye ulaşın. IEEE ESTU ile iş birliği yaparak teknoloji ve mühendislik alanında öncü projelere sponsor olun.",
+    "contactUs": "Bize Ulaşın",
+    "benefits": {
+      "count1": "200+",
+      "label1": "Aktif Üye",
+      "count2": "50+",
+      "label2": "Yıllık Etkinlik",
+      "count3": "15+",
+      "label3": "Teknik Proje"
+    }
+  },
+  "contact": {
+    "title": "İletişime Geçin",
+    "subtitle": "Sorularınız, önerileriniz veya iş birliği teklifleriniz için bizimle iletişime geçmekten çekinmeyin.",
+    "info": {
+      "address": "Adres",
+      "addressDetails": [
+        "Eskişehir Teknik Üniversitesi",
+        "Mühendislik Fakültesi",
+        "26555 Tepebaşı/Eskişehir"
+      ],
+      "email": "E-posta",
+      "emailDetails": [
+        "ieee.estu@gmail.com",
+        "info@ieeeestu.org"
+      ]
+    },
+    "social": {
+      "title": "Sosyal Medya"
+    },
+    "form": {
+      "title": "Mesaj Gönderin",
+      "name": "Ad Soyad",
+      "namePlaceholder": "Adınız ve soyadınız",
+      "email": "E-posta",
+      "emailPlaceholder": "ornek@posta.com",
+      "phone": "Telefon",
+      "phonePlaceholder": "05xx xxx xx xx",
+      "subject": "Konu",
+      "subjectPlaceholder": "Mesaj konusu",
+      "message": "Mesaj",
+      "messageRequired": "Mesajınız",
+      "messagePlaceholder": "Bize iletmek istediğiniz mesajı yazın",
+      "privacy": "Kişisel verilerimin işlenmesini kabul ediyorum.",
+      "send": "Mesajı Gönder"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Son yazılarımız ve haberler",
+    "readMore": "Devamını Oku",
+    "post1": {
+      "title": "IEEE Xtreme 17.0 Programlama Yarışması",
+      "excerpt": "24 saat süren dünya çapındaki programlama maratonunda takımımızın performansı ve deneyimlerimiz.",
+      "author": "IEEE ESTU",
+      "category": "Yarışma",
+      "readTime": "5 dk okuma"
+    },
+    "post2": {
+      "title": "Yapay Zeka ve Makine Öğrenmesi Workshop'u",
+      "excerpt": "Python ve TensorFlow kullanarak makine öğrenmesi modellerinin nasıl oluşturulacağını öğrendik.",
+      "author": "IEEE ESTU",
+      "category": "Teknik",
+      "readTime": "7 dk okuma"
+    },
+    "post3": {
+      "title": "IEEE Genel Kurul Toplantısı 2025",
+      "excerpt": "Yeni dönem yönetim kurulu seçimleri ve 2025 hedeflerimizi belirledik.",
+      "author": "IEEE ESTU",
+      "category": "IEEE",
+      "readTime": "3 dk okuma"
+    }
+  },
+  "xtreme": {
+    "title": "IEEE Xtreme",
+    "subtitle": "24 Saatlik Programlama Yarışması",
+    "stats": {
+      "hours": "24 Saat",
+      "hoursDesc": "Kesintisiz Kodlama",
+      "team": "3 Kişilik Takım",
+      "teamDesc": "İşbirliği ve Strateji",
+      "algo": "Algoritmik Problemler",
+      "algoDesc": "Zorlayıcı Sorular",
+      "global": "Küresel Yarışma",
+      "globalDesc": "Dünya Genelinde Katılım"
+    },
+    "comingSoon": "Çok Yakında",
+    "updating": "İçerik Güncelleniyor",
+    "updatingDesc": "IEEE Xtreme hakkında detaylı bilgiler ve takım performanslarımız çok yakında burada olacak."
+  },
+  "footer": {
+    "description": "Teknoloji ve mühendislik alanında yenilikçi projeler geliştiren, öğrencilerin gelişimine katkı sağlayan ve sektörle güçlü bağlantılar kuran öğrenci topluluğu.",
+    "subtitle": "Eskişehir Teknik Üniversitesi",
+    "brand": "IEEE ESTU Öğrenci Kolu",
+    "quickLinks": "Hızlı Erişim",
+    "resources": "Kaynaklar",
+    "social": "Sosyal Medya",
+    "rights": "Tüm hakları saklıdır.",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Şartları"
+  },
+  "subteams": {
+    "title": "Takımlarımız",
+    "subtitle": "IEEE ESTU Öğrenci Kolu bünyesinde faaliyet gösteren teknoloji takımlarımız",
+    "learnMore": "Detaylı Bilgi",
+    "joinTeam": "Takıma Katıl",
+    "achievementsTitle": "Başarılarımız",
+    "rovstech": {
+      "name": "Rovstech - ROV Takımı",
+      "tagline": "Sualtı Robotik Takımı",
+      "description": "Su altı araçları geliştiren, uluslararası yarışmalara katılan ve robotik sistemler üzerinde çalışan teknoloji takımımız. MATE ROV Competition'da ülkemizi temsil etmekteyiz.",
+      "features": [
+        "Su altı robotik sistemleri tasarımı ve üretimi",
+        "Hidrodinamik analiz ve test",
+        "Otonom seyir sistemleri geliştirme",
+        "Görüntü işleme ve yapay zeka entegrasyonu",
+        "Mekanik, elektronik ve yazılım ekip çalışması",
+        "Uluslararası yarışmalara hazırlık"
+      ],
+      "achievements": [
+        "MATE ROV Competition'da ülke finalisti",
+        "3 farklı ROV prototipi geliştirildi",
+        "10+ kişilik aktif ekip",
+        "Ulusal ve uluslararası yarışma deneyimi"
+      ]
+    },
+    "earendil": {
+      "name": "Earendil - Mars Rover Takımı",
+      "tagline": "Uzay Araçları Takımı",
+      "description": "Mars gezgini tasarlayan, yapay zeka destekli otonom sistemler geliştiren ve uzay teknolojileri üzerine çalışan projelerimizle teknolojinin sınırlarını zorluyoruz.",
+      "features": [
+        "Mars rover tasarımı ve üretimi",
+        "Otonom navigasyon sistemleri",
+        "Yapay zeka ve görüntü işleme",
+        "Zorlu arazi koşullarında test",
+        "Bilimsel görev ekipmanları entegrasyonu",
+        "Uzay yarışmaları için hazırlık"
+      ],
+      "achievements": [
+        "European Rover Challenge hazırlıkları",
+        "Otonom seyir sistemi geliştirme",
+        "15+ kişilik multidisipliner ekip",
+        "Ar-Ge ve inovasyon projeleri"
+      ]
+    },
+    "cta": {
+      "title": "Takımlarımıza Katılın",
+      "description": "Robotik, yazılım, mekanik veya elektronik alanında kendinizi geliştirmek mi istiyorsunuz? Takımlarımız her zaman yeni yetenekler arıyor!",
+      "button": "Başvuru Formu"
+    }
+  },
+  "common": {
+    "scrollTop": "Yukarı çık",
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "create": "Oluştur",
+    "back": "Geri",
+    "next": "İleri",
+    "submit": "Gönder",
+    "search": "Ara"
+  },
+  "admin": {
+    "title": "Yönetim Paneli",
+    "events": {
+      "title": "Etkinlikler",
+      "create": "Yeni Etkinlik",
+      "edit": "Etkinliği Düzenle",
+      "delete": "Etkinliği Sil",
+      "form": {
+        "title": "Başlık",
+        "slug": "Slug",
+        "description": "Açıklama",
+        "startDate": "Başlangıç Tarihi",
+        "endDate": "Bitiş Tarihi",
+        "location": "Konum",
+        "coverImage": "Kapak Görseli",
+        "tags": "Etiketler",
+        "googleFormUrl": "Google Form Linki",
+        "status": "Durum",
+        "published": "Yayınlandı",
+        "draft": "Taslak"
+      }
+    },
+    "pages": {
+      "title": "Sayfalar",
+      "edit": "Sayfayı Düzenle"
+    },
+    "media": {
+      "title": "Medya",
+      "upload": "Yükle",
+      "delete": "Sil"
+    }
+  },
+  "login": {
+    "title": "Admin Girişi",
+    "description": "Admin paneline erişmek için giriş yapın",
+    "email": "E-posta",
+    "emailPlaceholder": "admin@ieeeestu.com",
+    "password": "Şifre",
+    "submit": "Giriş Yap",
+    "signingIn": "Giriş yapılıyor...",
+    "noAccount": "Hesabınız yok mu?",
+    "contactAdmin": "Admin ekleme için sistem yöneticisiyle iletişime geçin.",
+    "errors": {
+      "invalidCredentials": "E-posta veya şifre hatalı",
+      "invalidEmail": "Geçersiz e-posta adresi",
+      "tooManyAttempts": "Çok fazla başarısız deneme. Lütfen daha sonra tekrar deneyin.",
+      "general": "Giriş yapılırken bir hata oluştu"
+    }
+  }
+}

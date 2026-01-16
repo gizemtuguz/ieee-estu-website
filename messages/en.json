@@ -1,0 +1,413 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "team": "Team",
+    "committees": "Committees & Coordinators",
+    "subteams": "Project Teams",
+    "events": "Events",
+    "sponsors": "Sponsors",
+    "contact": "Contact",
+    "blog": "Blog",
+    "xtreme": "Xtreme",
+    "joinUs": "Join Us",
+    "menuTitle": "Menu",
+    "menuDescription": "Navigate through IEEE ESTU pages",
+    "toggleLanguage": "Toggle language",
+    "toggleTheme": "Toggle theme",
+    "toggleMenu": "Toggle menu",
+    "language": {
+      "english": "English",
+      "turkish": "Turkish"
+    }
+  },
+  "hero": {
+    "title": "IEEE ESTU Student Branch",
+    "subtitle": "Eskişehir Technical University",
+    "description": "A student community that supports the development of students in technology and engineering, organizing innovative projects and events.",
+    "cta": "About Us",
+    "joinUs": "Join Us",
+    "stats": {
+      "members": "Active Members",
+      "events": "Events",
+      "awards": "Awards"
+    }
+  },
+  "eventsCallout": {
+    "title": "Explore Our Events",
+    "description": "We organize a variety of events from workshops to competitions, seminars to project days. Don't miss out on opportunities to contribute to your development!",
+    "stats": {
+      "workshops": "25+",
+      "workshopsLabel": "Workshop & Seminar",
+      "competitions": "10+",
+      "competitionsLabel": "Competition",
+      "participants": "500+",
+      "participantsLabel": "Participant"
+    },
+    "button": "View All Events"
+  },
+  "about": {
+    "title": "About Us",
+    "intro": [
+      "IEEE ESTU Student Branch is an innovative and dynamic student community operating in the field of technology and engineering at Eskişehir Technical University.",
+      "As part of IEEE, the world's largest technical professional organization, we offer our members opportunities for technical and personal development.",
+      "We add value to our members' careers through workshops, seminars, competitions, and social events."
+    ],
+    "callout": "IEEE ESTU Student Branch serves with the following management team for the 2024-2025 academic year:",
+    "president": "Club President",
+    "advisor": "Club Advisor",
+    "mission": "Our Mission",
+    "missionText": "Support our members' technical and personal growth while contributing to a technology-driven community.",
+    "features": {
+      "innovation": {
+        "title": "Innovation",
+        "description": "We organize projects and events that push the boundaries of technology."
+      },
+      "community": {
+        "title": "Community",
+        "description": "We bring our members together with the industry by building a strong network."
+      },
+      "goalOriented": {
+        "title": "Goal Oriented",
+        "description": "We help acquire the necessary skills to achieve career goals."
+      },
+      "growth": {
+        "title": "Growth",
+        "description": "We provide continuous development in technical and social skills."
+      }
+    },
+    "missionPoints": [
+      "Providing technical and professional development opportunities to our members",
+      "Strengthening university-industry collaboration",
+      "Developing students' leadership and teamwork skills",
+      "Creating awareness in technology and engineering",
+      "Taking an active role in national and international projects"
+    ]
+  },
+  "team": {
+    "title": "Our Team",
+    "subtitle": "Meet the IEEE ESTU Student Branch team",
+    "joinButton": "Registration Form",
+    "join": "Join the Team",
+    "joinDescription": "Fill out the registration form to join the IEEE ESTU family and take an active role in our events.",
+    "sections": {
+      "boardOfDirectors": "Board of Directors",
+      "administrativeBoard": "Administrative Board",
+      "auditBoard": "Audit Board"
+    },
+    "positions": {
+      "president": "President",
+      "vicePresident": "Vice President",
+      "coordinator": "Coordinator",
+      "responsible": "Responsible"
+    }
+  },
+  "committees": {
+    "title": "Committees and Coordination",
+    "subtitle": "Technical committees and coordination units under IEEE ESTU Student Branch",
+    "focusAreas": "Focus Areas",
+    "aess": {
+      "name": "AESS - Aerospace and Electronic Systems",
+      "description": "Tracks technological developments in aerospace, space, and defense systems and develops projects.",
+      "focus": ["Aviation Technologies", "Space Systems", "Defense Electronics", "Autonomous Systems"]
+    },
+    "comsoc": {
+      "name": "ComSoc - Communications Society",
+      "description": "Works on communication systems and network technologies, specializing in 5G and beyond technologies.",
+      "focus": ["Wireless Communication", "5G Technologies", "Network Security", "IoT"]
+    },
+    "cs": {
+      "name": "CS - Computer Society",
+      "description": "Conducts projects in artificial intelligence, machine learning, and software development.",
+      "focus": ["Artificial Intelligence", "Machine Learning", "Software Development", "Data Science"]
+    },
+    "pes": {
+      "name": "PES - Power and Energy Society",
+      "description": "Works on renewable energy, smart grids, and energy efficiency.",
+      "focus": ["Renewable Energy", "Smart Grids", "Energy Efficiency", "Power Systems"]
+    },
+    "wie": {
+      "name": "WIE - Women in Engineering",
+      "description": "Encourages and supports women to take an active role in engineering and technology fields.",
+      "focus": ["Women Leaders", "Mentorship Programs", "Awareness Events", "Career Development"]
+    },
+    "kok": {
+      "name": "KÖK - Corporate Coordination",
+      "description": "Manages the club's corporate communication and sponsor relations, plays an active role in event organization.",
+      "focus": ["Sponsor Relations", "Corporate Communication", "Event Management", "Business Development"]
+    },
+    "pr": {
+      "name": "PR - Public Relations and Media",
+      "description": "Conducts the club's social media and promotional activities, produces visual content.",
+      "focus": ["Social Media", "Graphic Design", "Content Production", "Brand Management"]
+    }
+  },
+  "events": {
+    "title": "Our Events",
+    "subtitle": "As IEEE ESTU Student Branch, we contribute to the development of our members through workshops, seminars, competitions, and social events.",
+    "upcomingTitle": "Upcoming Events",
+    "pastTitle": "Past Events",
+    "upcoming": "Upcoming Events",
+    "past": "Past Events",
+    "details": "Details",
+    "register": "Register",
+    "applyButton": "Application Form",
+    "upcoming1": {
+      "title": "Artificial Intelligence and Machine Learning Workshop",
+      "location": "ESTU Faculty of Engineering",
+      "category": "Workshop",
+      "description": "Hands-on introduction to machine learning with Python and TensorFlow.",
+      "participants": "100+ participants",
+      "status": "Registration Open"
+    },
+    "upcoming2": {
+      "title": "IEEE Xtreme 18.0 Programming Competition",
+      "location": "Online",
+      "category": "Competition",
+      "description": "We solve algorithmic challenges as a team in the 24-hour global marathon.",
+      "participants": "200+ participants",
+      "status": "Coming Soon"
+    },
+    "past1": {
+      "title": "Cybersecurity Seminar",
+      "location": "ESTU Conference Hall",
+      "category": "Seminar",
+      "description": "Industry experts shared security trends and career insights.",
+      "participants": "150+ participants",
+      "status": "Completed"
+    },
+    "past2": {
+      "title": "ROV Project Day",
+      "location": "ESTU Laboratories",
+      "category": "Project Day",
+      "description": "We showcased prototypes developed by our teams during project day.",
+      "participants": "80+ participants",
+      "status": "Completed"
+    },
+    "newsletter": {
+      "title": "Stay Informed",
+      "description": "Join our newsletter for new events, trainings, and announcements.",
+      "button": "Join the Newsletter"
+    }
+  },
+  "sponsors": {
+    "title": "Our Sponsors",
+    "subtitle": "Valuable business partners supporting IEEE ESTU Student Branch.",
+    "comingSoon": "Coming Soon",
+    "comingSoonDescription": "Information about our sponsors and business partners will be available on this page soon.",
+    "partnershipTitle": "Become Our Partner",
+    "partnershipDescription": "Reach a wide audience with our 200+ active members and 50+ annual events. Partner with IEEE ESTU to sponsor leading projects in technology and engineering.",
+    "contactUs": "Contact Us",
+    "benefits": {
+      "count1": "200+",
+      "label1": "Active Members",
+      "count2": "50+",
+      "label2": "Annual Events",
+      "count3": "15+",
+      "label3": "Technical Projects"
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Don't hesitate to contact us for your questions, suggestions, or collaboration offers.",
+    "info": {
+      "address": "Address",
+      "addressDetails": [
+        "Eskisehir Technical University",
+        "Faculty of Engineering",
+        "26555 Tepebasi/Eskisehir"
+      ],
+      "email": "Email",
+      "emailDetails": [
+        "ieee.estu@gmail.com",
+        "info@ieeeestu.org"
+      ]
+    },
+    "social": {
+      "title": "Social Media"
+    },
+    "form": {
+      "title": "Send a Message",
+      "name": "Full Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "name@example.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+90 5xx xxx xx xx",
+      "subject": "Subject",
+      "subjectPlaceholder": "Message subject",
+      "message": "Message",
+      "messageRequired": "Your message",
+      "messagePlaceholder": "Write the message you want to send",
+      "privacy": "I agree to the processing of my personal data.",
+      "send": "Send Message"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Our latest posts and news",
+    "readMore": "Read More",
+    "post1": {
+      "title": "IEEE Xtreme 17.0 Programming Competition",
+      "excerpt": "Our team's performance and experiences in the 24-hour worldwide programming marathon.",
+      "author": "IEEE ESTU",
+      "category": "Competition",
+      "readTime": "5 min read"
+    },
+    "post2": {
+      "title": "Artificial Intelligence and Machine Learning Workshop",
+      "excerpt": "We learned how to build machine learning models using Python and TensorFlow.",
+      "author": "IEEE ESTU",
+      "category": "Technical",
+      "readTime": "7 min read"
+    },
+    "post3": {
+      "title": "IEEE General Assembly Meeting 2025",
+      "excerpt": "New board elections and setting our 2025 goals.",
+      "author": "IEEE ESTU",
+      "category": "IEEE",
+      "readTime": "3 min read"
+    }
+  },
+  "xtreme": {
+    "title": "IEEE Xtreme",
+    "subtitle": "24-Hour Programming Competition",
+    "stats": {
+      "hours": "24 Hours",
+      "hoursDesc": "Non-stop Coding",
+      "team": "3-Person Team",
+      "teamDesc": "Collaboration and Strategy",
+      "algo": "Algorithmic Problems",
+      "algoDesc": "Challenging Questions",
+      "global": "Global Competition",
+      "globalDesc": "Worldwide Participation"
+    },
+    "comingSoon": "Coming Soon",
+    "updating": "Content Updating",
+    "updatingDesc": "Detailed information about IEEE Xtreme and our team performances will be here soon."
+  },
+  "footer": {
+    "description": "A student community that develops innovative projects in technology and engineering, contributes to student development, and establishes strong connections with the industry.",
+    "subtitle": "Eskişehir Technical University",
+    "brand": "IEEE ESTU Student Branch",
+    "quickLinks": "Quick Links",
+    "resources": "Resources",
+    "social": "Social Media",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  "subteams": {
+    "title": "Our Teams",
+    "subtitle": "Technology teams operating under IEEE ESTU Student Branch",
+    "learnMore": "Learn More",
+    "joinTeam": "Join the Team",
+    "achievementsTitle": "Achievements",
+    "rovstech": {
+      "name": "Rovstech - ROV Team",
+      "tagline": "Underwater Robotics Team",
+      "description": "Our technology team develops underwater vehicles, participates in international competitions, and works on robotic systems. We represent our country at the MATE ROV Competition.",
+      "features": [
+        "Underwater robotic system design and production",
+        "Hydrodynamic analysis and testing",
+        "Autonomous navigation system development",
+        "Image processing and AI integration",
+        "Mechanical, electronic, and software team collaboration",
+        "International competition preparation"
+      ],
+      "achievements": [
+        "MATE ROV Competition national finalist",
+        "3 different ROV prototypes developed",
+        "10+ active team members",
+        "National and international competition experience"
+      ]
+    },
+    "earendil": {
+      "name": "Earendil - Mars Rover Team",
+      "tagline": "Space Vehicles Team",
+      "description": "We push the boundaries of technology with our projects designing Mars rovers, developing AI-supported autonomous systems, and working on space technologies.",
+      "features": [
+        "Mars rover design and production",
+        "Autonomous navigation systems",
+        "Artificial intelligence and image processing",
+        "Testing in challenging terrain conditions",
+        "Scientific mission equipment integration",
+        "Space competition preparation"
+      ],
+      "achievements": [
+        "European Rover Challenge preparations",
+        "Autonomous navigation system development",
+        "15+ multidisciplinary team members",
+        "R&D and innovation projects"
+      ]
+    },
+    "cta": {
+      "title": "Join Our Teams",
+      "description": "Do you want to develop yourself in robotics, software, mechanics, or electronics? Our teams are always looking for new talents!",
+      "button": "Application Form"
+    }
+  },
+  "common": {
+    "scrollTop": "Scroll to top",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "search": "Search"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "events": {
+      "title": "Events",
+      "create": "New Event",
+      "edit": "Edit Event",
+      "delete": "Delete Event",
+      "form": {
+        "title": "Title",
+        "slug": "Slug",
+        "description": "Description",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "location": "Location",
+        "coverImage": "Cover Image",
+        "tags": "Tags",
+        "googleFormUrl": "Google Form Link",
+        "status": "Status",
+        "published": "Published",
+        "draft": "Draft"
+      }
+    },
+    "pages": {
+      "title": "Pages",
+      "edit": "Edit Page"
+    },
+    "media": {
+      "title": "Media",
+      "upload": "Upload",
+      "delete": "Delete"
+    }
+  },
+  "login": {
+    "title": "Admin Login",
+    "description": "Sign in to access admin panel",
+    "email": "Email",
+    "emailPlaceholder": "admin@ieeeestu.com",
+    "password": "Password",
+    "submit": "Sign In",
+    "signingIn": "Signing in...",
+    "noAccount": "Don't have an account?",
+    "contactAdmin": "Contact system administrator to add admin users.",
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "invalidEmail": "Invalid email address",
+      "tooManyAttempts": "Too many failed attempts. Please try again later.",
+      "general": "An error occurred during sign in"
+    }
+  }
+}
