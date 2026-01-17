@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
+import Script from 'next/script';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,11 +33,21 @@ type FormData = {
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
+// Add hcaptcha to window type
+declare global {
+  interface Window {
+    hcaptcha: any;
+    onCaptchaSuccess: (token: string) => void;
+  }
+}
+
 export default function ContactPage() {
   const t = useTranslations('contact');
   const [isDark, setIsDark] = useState(false);
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [hcaptchaToken, setHcaptchaToken] = useState('');
+  const hcaptchaRef = useRef<any>(null);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -63,7 +74,15 @@ export default function ContactPage() {
       attributeFilter: ['class'],
     });
 
-    return () => observer.disconnect();
+    // Set up hCaptcha callback
+    (window as any).onCaptchaSuccess = (token: string) => {
+      setHcaptchaToken(token);
+    };
+
+    return () => {
+      observer.disconnect();
+      delete (window as any).onCaptchaSuccess;
+    };
   }, []);
 
   const handleInputChange = (
@@ -82,6 +101,13 @@ export default function ContactPage() {
     e.preventDefault();
     setFormStatus('loading');
     setErrorMessage('');
+
+    // Check hCaptcha token
+    if (!hcaptchaToken) {
+      setFormStatus('error');
+      setErrorMessage('Lütfen reCAPTCHA doğrulamasını tamamlayın');
+      return;
+    }
 
     // Honeypot check - if filled, it's a bot
     if (formData.honeypot) {
@@ -141,6 +167,7 @@ export default function ContactPage() {
           message: formData.message,
           from_name: 'IEEE ESTU İletişim Formu',
           replyto: formData.email,
+          'h-captcha-response': hcaptchaToken,
         }),
       });
 
@@ -148,6 +175,11 @@ export default function ContactPage() {
 
       if (data.success) {
         setFormStatus('success');
+        // Reset hCaptcha
+        if (hcaptchaRef.current) {
+          hcaptchaRef.current.reset();
+        }
+        setHcaptchaToken('');
         // Set rate limiting timestamp
         localStorage.setItem('lastContactFormSubmission', Date.now().toString());
         setFormData({
@@ -219,6 +251,16 @@ export default function ContactPage() {
 
   return (
     <SiteLayout>
+      <Script
+        src="https://js.hcaptcha.com/1/api.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          // hCaptcha loaded
+          if (window.hcaptcha) {
+            hcaptchaRef.current = window.hcaptcha;
+          }
+        }}
+      />
       <section className="py-20 bg-gray-100 dark:bg-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -454,6 +496,15 @@ export default function ContactPage() {
                       >
                         {t('form.privacy')} <span className="text-red-500">*</span>
                       </label>
+                    </div>
+
+                    {/* hCaptcha */}
+                    <div className="flex justify-center">
+                      <div
+                        className="h-captcha"
+                        data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+                        data-callback="onCaptchaSuccess"
+                      ></div>
                     </div>
 
                     <Button
